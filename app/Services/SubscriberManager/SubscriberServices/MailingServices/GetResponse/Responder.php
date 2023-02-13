@@ -2,9 +2,9 @@
 
 namespace App\Services\SubscriberManager\SubscriberServices\MailingServices\GetResponse;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\MailingServices\MailResponderInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\MailingServices\MailResponderInterface;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\types\MailingList;
 use App\Services\SubscriberManager\SubscriberServices\MailingServices\BaseResponder;
 
@@ -56,7 +56,6 @@ class Responder extends BaseResponder implements MailResponderInterface
 
     public function updateSubscriberAfterAddToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
-        dump($this->response);
         $subscriberList->setStatusVerificationPending();
         $subscriber->mailingLists()->add($subscriberList);
 
@@ -65,7 +64,6 @@ class Responder extends BaseResponder implements MailResponderInterface
 
     public function updateSubscriberAfterDeleteFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
-        dump($this->response);
         $subscriber->mailingLists()->delete($subscriberList);
 
         return $subscriber;

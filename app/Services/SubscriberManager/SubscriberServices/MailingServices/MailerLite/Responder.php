@@ -2,9 +2,9 @@
 
 namespace App\Services\SubscriberManager\SubscriberServices\MailingServices\MailerLite;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\MailingServices\MailResponderInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\MailingServices\MailResponderInterface;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\types\MailingList;
 use App\Services\SubscriberManager\SubscriberServices\MailingServices\BaseResponder;
 

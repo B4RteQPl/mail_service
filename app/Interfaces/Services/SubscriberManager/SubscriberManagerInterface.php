@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Interfaces\SubscriberManager;
+namespace App\Interfaces\Services\SubscriberManager;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\ServiceInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\ServiceInterface;
 
 interface SubscriberManagerInterface
 {

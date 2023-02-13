@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Interfaces\SubscriberManager\Subscriber\SubscriberList;
+namespace App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList;
 
-use App\Exceptions\Service\SubscriberService\SubscriberListNotSupportedException;
+use App\Exceptions\Services\SubscriberManager\SubscriberListNotSupportedException;
 
 interface SubscriberListManagerInterface
 {

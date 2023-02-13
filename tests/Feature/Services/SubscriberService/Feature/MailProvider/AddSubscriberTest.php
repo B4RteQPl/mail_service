@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Services\SubscriberService\Feature\MailProvider;
 
-use App\Exceptions\Service\SubscriberService\SubscriberAddingIsNotSupportedException;
+use App\Exceptions\Services\SubscriberManager\SubscriberAddingIsNotSupportedException;
 use App\Services\SubscriberManager\SubscriberServices\MailingServices\ConvertKit\DeliveryService as ConvertKitRequester;
 use App\Services\SubscriberManager\SubscriberServices\MailingServices\GetResponse\DeliveryService as GetResponseRequester;
 use App\Services\SubscriberManager\SubscriberServices\MailingServices\Mailchimp\DeliveryService as MailchimpRequester;

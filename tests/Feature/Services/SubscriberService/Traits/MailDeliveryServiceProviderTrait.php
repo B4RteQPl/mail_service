@@ -23,9 +23,9 @@ trait MailDeliveryServiceProviderTrait
     {
         return [
             'Mailerlite' => [function () { return new MailerLiteRequester((env('TEST_MAILERLITE_API_KEY'))); }],
-            'ConvertKit' => [function () { return new ConvertKitRequester(env('TEST_CONVERTKIT_API_SECRET')); }],
+//            'ConvertKit' => [function () { return new ConvertKitRequester(env('TEST_CONVERTKIT_API_SECRET')); }],
             'Active Campaign' => [function () { return new ActiveCampaignRequester(env('TEST_ACTIVECAMPAIGN_API_KEY'), env('TEST_ACTIVECAMPAIGN_API_URL')); }],
-            'Mailerlite Classic' => [function () { return new MailerLiteClassicRequester(env('TEST_MAILERLITE_CLASSIC_API_KEY')); }],
+//            'Mailerlite Classic' => [function () { return new MailerLiteClassicRequester(env('TEST_MAILERLITE_CLASSIC_API_KEY')); }],
             'GetResponse' => [function () { return new GetResponseRequester(env('TEST_GETRESPONSE_API_KEY')); }],
             'Sendgrid' => [function () { return new SendgridRequester(env('TEST_SENDGRID_API_KEY')); }],
             'Mailchimp' => [function () { return new MailchimpRequester(env('TEST_MAILCHIMP_API_KEY')); }],

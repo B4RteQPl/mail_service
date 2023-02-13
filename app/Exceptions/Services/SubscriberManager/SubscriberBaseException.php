@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\Service\SubscriberService;
+namespace App\Exceptions\Services\SubscriberManager;
 
 use Exception;
 use Illuminate\Support\Facades\Log as Log;

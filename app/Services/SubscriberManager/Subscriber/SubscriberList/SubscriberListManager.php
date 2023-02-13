@@ -2,9 +2,9 @@
 
 namespace App\Services\SubscriberManager\Subscriber\SubscriberList;
 
-use App\Exceptions\Service\SubscriberService\SubscriberListNotSupportedException;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListManagerInterface;
+use App\Exceptions\Services\SubscriberManager\SubscriberListNotSupportedException;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListManagerInterface;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\types\ChannelList;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\types\MailingList;
 
@@ -85,24 +85,36 @@ class SubscriberListManager implements SubscriberListManagerInterface
     }
 
     /**
-     * @param SubscriberListInterface $listItem
+     * @param SubscriberListInterface $subscriberList
      * @throws SubscriberListNotSupportedException
      */
-    private function assertListItem(SubscriberListInterface $listItem): void
+    private function assertListItem(SubscriberListInterface $subscriberList): void
     {
         switch (true) {
-            case $listItem instanceof MailingList:
-                if (MailingList::isInvalid($listItem)) {
-                    throw new SubscriberListNotSupportedException(['subscriberList' => $listItem]);
+            case $subscriberList instanceof MailingList:
+                if (MailingList::isInvalid($subscriberList)) {
+                    throw new SubscriberListNotSupportedException([
+                            'subscriberList' => $subscriberList
+                        ],
+                        'SubscriberList of type Mailinglist is invalid'
+                    );
                 }
                 break;
-            case $listItem instanceof ChannelList:
-                if (ChannelList::isInvalid($listItem)) {
-                    throw new SubscriberListNotSupportedException(['subscriberList' => $listItem]);
+            case $subscriberList instanceof ChannelList:
+                if (ChannelList::isInvalid($subscriberList)) {
+                    throw new SubscriberListNotSupportedException([
+                            'subscriberList' => $subscriberList
+                        ],
+                        'SubscriberList of type ChannelList is invalid'
+                    );
                 }
                 break;
             default:
-                throw new SubscriberListNotSupportedException(['subscriberList' => $listItem]);
+                throw new SubscriberListNotSupportedException([
+                        'subscriberList' => $subscriberList
+                    ],
+                    'Subscriber list is not supported'
+                );
         }
     }
 

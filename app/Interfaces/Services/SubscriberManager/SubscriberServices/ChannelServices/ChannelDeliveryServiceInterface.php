@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\SubscriberManager\SubscriberServices\ChannelServices;
+namespace App\Interfaces\Services\SubscriberManager\SubscriberServices\ChannelServices;
 
 interface ChannelDeliveryServiceInterface
 {

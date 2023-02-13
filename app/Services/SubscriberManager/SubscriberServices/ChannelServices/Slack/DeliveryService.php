@@ -2,7 +2,7 @@
 
 namespace App\Services\SubscriberManager\SubscriberServices\ChannelServices\Slack;
 
-use App\Interfaces\SubscriberManager\SubscriberServices\ChannelServices\ChannelDeliveryServiceInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\ChannelServices\ChannelDeliveryServiceInterface;
 use App\Services\SubscriberManager\SubscriberServices\ChannelServices\BaseDeliveryService;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
@@ -21,7 +21,7 @@ class DeliveryService extends BaseDeliveryService implements ChannelDeliveryServ
         $url = $this->endpoint . '/auth.test';
 
         $response = $this->requestWithHeaders()->post($url);
-        dump($response->json());
+
         return $response->status() === 200;
     }
 
@@ -73,8 +73,6 @@ class DeliveryService extends BaseDeliveryService implements ChannelDeliveryServ
         ];
 
         $response = $this->requestWithHeaders()->post($url, $data);
-
-        dump($response);
     }
 
     public function deleteSubscriber($subscriber) {
@@ -87,8 +85,6 @@ class DeliveryService extends BaseDeliveryService implements ChannelDeliveryServ
         ];
 
         $response = $this->requestWithHeaders()->post($url, $data);
-
-        dump($response);
     }
 
     public function getType(): string

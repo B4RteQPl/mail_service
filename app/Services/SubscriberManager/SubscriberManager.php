@@ -2,10 +2,10 @@
 
 namespace App\Services\SubscriberManager;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\SubscriberManagerInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\ServiceInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberManagerInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\ServiceInterface;
 
 class SubscriberManager implements SubscriberManagerInterface
 {

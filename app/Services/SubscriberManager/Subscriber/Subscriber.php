@@ -2,8 +2,8 @@
 
 namespace App\Services\SubscriberManager\Subscriber;
 
-use App\Exceptions\Service\SubscriberService\SubscriberListNotSupportedException;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Exceptions\Services\SubscriberManager\SubscriberListNotSupportedException;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListManager;
 use App\ValueObjects\Email;
 use App\ValueObjects\FirstName;

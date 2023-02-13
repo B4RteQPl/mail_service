@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Services\SubscriberManager\SubscriberServices\MailingServices\MailChimp;
-use App\Exceptions\Service\SubscriberService\CannotAddSubscriberToMailingListException;
-use App\Exceptions\Service\SubscriberService\CannotDeleteSubscriberFromMailingListException;
-use App\Exceptions\Service\SubscriberService\SubscriberAddingIsNotSupportedException;
-use App\Exceptions\Service\SubscriberService\SubscriberNotFoundException;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\MailingServices\MailDeliveryServiceInterface;
+use App\Exceptions\Services\SubscriberManager\CannotAddSubscriberToSubscriberListException;
+use App\Exceptions\Services\SubscriberManager\CannotDeleteSubscriberFromSubscriberListException;
+use App\Exceptions\Services\SubscriberManager\SubscriberAddingIsNotSupportedException;
+use App\Exceptions\Services\SubscriberManager\SubscriberNotFoundException;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\MailingServices\MailDeliveryServiceInterface;
 use App\Services\SubscriberManager\SubscriberServices\MailingServices\BaseDeliveryService;
 
 class DeliveryService extends BaseDeliveryService implements MailDeliveryServiceInterface
@@ -85,7 +85,7 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     }
 
     /**
-     * @throws CannotAddSubscriberToMailingListException
+     * @throws CannotAddSubscriberToSubscriberListException
      *
      * @url https://mailchimp.com/developer/marketing/api/list-members/add-member-to-list/
      */
@@ -99,12 +99,15 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
             return Responder::for($response)->updateSubscriberAfterAddToSubscriberList($subscriber, $subscriberList);
         } catch (\Exception $e) {
-            throw new CannotAddSubscriberToMailingListException([], 'Something went wrong');
+            throw new CannotAddSubscriberToSubscriberListException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList->toArray()
+            ]);
         }
     }
 
     /**
-     * @throws CannotDeleteSubscriberFromMailingListException
+     * @throws CannotDeleteSubscriberFromSubscriberListException
      *
      * @url https://mailchimp.com/developer/marketing/api/list-members/archive-list-member/
      *
@@ -118,7 +121,10 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
             return Responder::for($response)->updateSubscriberAfterDeleteFromSubscriberList($subscriber, $subscriberList);
         } catch (\Exception $e) {
-            throw new CannotDeleteSubscriberFromMailingListException([], 'Something went wrong');
+            throw new CannotDeleteSubscriberFromSubscriberListException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList->toArray()
+            ]);
         }
     }
 

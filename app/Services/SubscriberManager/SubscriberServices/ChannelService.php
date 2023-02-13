@@ -2,13 +2,13 @@
 
 namespace App\Services\SubscriberManager\SubscriberServices;
 
-use App\Exceptions\Service\SubscriberService\CannotGetSubscriberException;
-use App\Exceptions\Service\SubscriberService\SubscriberAddingIsNotSupportedException;
-use App\Exceptions\Service\SubscriberService\SubscriberNotFoundException;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\ChannelServices\ChannelDeliveryServiceInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\ServiceInterface;
+use App\Exceptions\Services\SubscriberManager\CannotGetSubscriberException;
+use App\Exceptions\Services\SubscriberManager\SubscriberAddingIsNotSupportedException;
+use App\Exceptions\Services\SubscriberManager\SubscriberNotFoundException;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\ChannelServices\ChannelDeliveryServiceInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\ServiceInterface;
 
 class ChannelService implements ServiceInterface
 {

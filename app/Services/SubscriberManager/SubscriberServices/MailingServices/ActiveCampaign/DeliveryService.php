@@ -2,15 +2,15 @@
 
 namespace App\Services\SubscriberManager\SubscriberServices\MailingServices\ActiveCampaign;
 
-use App\Exceptions\Service\SubscriberService\CannotAddSubscriberException;
-use App\Exceptions\Service\SubscriberService\CannotAddSubscriberToMailingListException;
-use App\Exceptions\Service\SubscriberService\CannotDeleteSubscriberFromMailingListException;
-use App\Exceptions\Service\SubscriberService\CannotGetSubscriberException;
-use App\Exceptions\Service\SubscriberService\ProviderRateLimitException;
-use App\Exceptions\Service\SubscriberService\SubscriberNotFoundException;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\MailingServices\MailDeliveryServiceInterface;
+use App\Exceptions\Services\SubscriberManager\CannotAddSubscriberException;
+use App\Exceptions\Services\SubscriberManager\CannotAddSubscriberToSubscriberListException;
+use App\Exceptions\Services\SubscriberManager\CannotDeleteSubscriberFromSubscriberListException;
+use App\Exceptions\Services\SubscriberManager\CannotGetSubscriberException;
+use App\Exceptions\Services\SubscriberManager\ProviderRateLimitException;
+use App\Exceptions\Services\SubscriberManager\SubscriberNotFoundException;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\MailingServices\MailDeliveryServiceInterface;
 use App\Services\SubscriberManager\SubscriberServices\MailingServices\BaseDeliveryService;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
@@ -70,7 +70,9 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
         $response = $this->requestWithHeaders()->post($url, $contact);
 
         if ($response->status() === 429) {
-            throw new ProviderRateLimitException([], 'Too many requests');
+            throw new ProviderRateLimitException([
+                'subscriber' => $subscriber->toArray(),
+            ]);
         }
 
         if (in_array($response->status(), [200, 201])) {
@@ -102,11 +104,17 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
             return Responder::for($response)->updateSubscriberFromSearchResult($subscriber);
         }
 
-        throw new CannotGetSubscriberException([], 'Something went wrong');
+        $debugData = [
+            'subscriber' => $subscriber->toArray(),
+        ];
+        if ($subscriberList) {
+            $debugData['subscriberList'] = $subscriberList->toArray();
+        }
+        throw new CannotGetSubscriberException($debugData);
     }
 
     /**
-     * @throws CannotAddSubscriberToMailingListException
+     * @throws CannotAddSubscriberToSubscriberListException
      * @throws ProviderRateLimitException
      */
     public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
@@ -126,14 +134,20 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
         }
 
         if ($response->status() === 429) {
-            throw new ProviderRateLimitException([], 'Too many requests');
+            throw new ProviderRateLimitException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList->toArray(),
+            ]);
         }
 
-        throw new CannotAddSubscriberToMailingListException([], 'Something went wrong');
+        throw new CannotAddSubscriberToSubscriberListException([
+            'subscriber' => $subscriber->toArray(),
+            'subscriberList' => $subscriberList->toArray()
+        ]);
     }
 
     /**
-     * @throws CannotDeleteSubscriberFromMailingListException
+     * @throws CannotDeleteSubscriberFromSubscriberListException
      */
     public function deleteSubscriberFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
@@ -152,10 +166,16 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
         }
 
         if ($response->status() === 429) {
-            throw new ProviderRateLimitException([], 'Too many requests');
+            throw new ProviderRateLimitException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList->toArray(),
+            ]);
         }
 
-        throw new CannotDeleteSubscriberFromMailingListException([], 'Something went wrong');
+        throw new CannotDeleteSubscriberFromSubscriberListException([
+            'subscriber' => $subscriber->toArray(),
+            'subscriberList' => $subscriberList->toArray()
+        ]);
     }
 
     private function requestWithHeaders(): PendingRequest

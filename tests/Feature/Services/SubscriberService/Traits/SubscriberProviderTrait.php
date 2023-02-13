@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Services\SubscriberService\Traits;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
 use App\Services\SubscriberManager\Subscriber\Subscriber;
 use App\ValueObjects\Email;
 use App\ValueObjects\FirstName;

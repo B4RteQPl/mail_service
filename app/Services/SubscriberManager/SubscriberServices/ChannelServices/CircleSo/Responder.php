@@ -2,8 +2,8 @@
 
 namespace App\Services\SubscriberManager\SubscriberServices\ChannelServices\CircleSo;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\types\ChannelList;
 
 class Responder

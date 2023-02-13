@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\SubscriberManager\Subscriber\SubscriberList;
+namespace App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList;
 
 interface SubscriberListInterface
 {

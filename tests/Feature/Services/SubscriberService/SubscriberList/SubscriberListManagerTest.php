@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Services\SubscriberService\SubscriberList;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListManager;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\types\MailingList;
 use Tests\TestCase;

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Services\SubscriberService\Mocks;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListManagerInterface;
-use App\Interfaces\SubscriberManager\SubscriberManagerInterface;
-use App\Interfaces\SubscriberManager\SubscriberServices\ServiceInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListManagerInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberManagerInterface;
+use App\Interfaces\Services\SubscriberManager\SubscriberServices\ServiceInterface;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListManager;
 use App\ValueObjects\Email;
 use App\ValueObjects\FirstName;

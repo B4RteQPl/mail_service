@@ -5,7 +5,6 @@ namespace Tests\Feature\Services\SubscriberService\Feature\MailProvider;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\types\MailingList;
 use App\Services\SubscriberManager\SubscriberServices\MailingService;
 use Tests\Feature\Services\SubscriberService\Traits\MailDeliveryServiceProviderTrait;
-use Tests\Feature\Services\SubscriberService\Traits\SubscriberListProviderTrait;
 use Tests\Feature\Services\SubscriberService\Traits\SubscriberProviderTrait;
 use Tests\TestCase;
 
@@ -14,7 +13,6 @@ class AddSubscriberToSubscriberListTest extends TestCase
 
     use MailDeliveryServiceProviderTrait;
     use SubscriberProviderTrait;
-    use SubscriberListProviderTrait;
 
     /**
      * @test
@@ -26,11 +24,10 @@ class AddSubscriberToSubscriberListTest extends TestCase
         $mailingService = new MailingService($deliveryService());
 
         $subscriber = $this->getSubscriberWithFirstNameAndLastName();
-        $id = $deliveryService->getTestingGroupId();
-        $subscriberList = new MailingList($id, 'Test Group', $deliveryService->getType());
+        $id = $deliveryService()->getTestingGroupId();
+        $subscriberList = new MailingList($id, 'Test Group', $deliveryService()->getType());
 
         // when
-        dump($subscriber, $subscriberList);
         $updatedSubscriber = $mailingService->addSubscriberToSubscriberList($subscriber, $subscriberList);
 
         $subscriber = $this->getSubscriberWithRequiredFields();
@@ -44,6 +41,5 @@ class AddSubscriberToSubscriberListTest extends TestCase
         $this->assertFalse($subscriber->mailingLists()->isEmpty());
         $this->assertCount(1, $subscriber->mailingLists()->get());
         $this->assertTrue($subscriber->mailingLists()->has($subscriberList));
-        dump($subscriber);
     }
 }

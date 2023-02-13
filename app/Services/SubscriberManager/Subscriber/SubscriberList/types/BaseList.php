@@ -2,7 +2,7 @@
 
 namespace App\Services\SubscriberManager\Subscriber\SubscriberList\types;
 
-use App\Interfaces\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
+use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
 
 class BaseList implements SubscriberListInterface
 {

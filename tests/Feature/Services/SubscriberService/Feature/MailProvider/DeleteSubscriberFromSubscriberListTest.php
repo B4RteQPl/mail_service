@@ -120,36 +120,25 @@ class DeleteSubscriberFromSubscriberListTest extends TestCase
         // tricky but works :D
         // call get response and sendgrid to add subscriber and wait one time
 
-        dump(1);
-        dump($subscriber);
         $this->assertFalse($subscriber->mailingLists()->has($getResponseNextSubscriberList));
         $this->assertFalse($subscriber->mailingLists()->has($sendgridNextSubscriberList));
 
-        dump(2);
-        dump($subscriber);
         $getResponseMailingService->addSubscriberToSubscriberList($subscriber, $getResponseSubscriberList);
         $this->assertFalse($subscriber->mailingLists()->isEmpty());
         $this->assertTrue($subscriber->mailingLists()->has($getResponseSubscriberList));
         $this->assertCount(1, $subscriber->mailingLists()->get());
 
-        dump(3);
-        dump($subscriber);
         $sendgridMailingService->addSubscriberToSubscriberList($subscriber, $sendgridSubscriberList);
         $this->assertTrue($subscriber->mailingLists()->has($sendgridSubscriberList));
         $this->assertTrue($subscriber->mailingLists()->has($getResponseSubscriberList));
         $this->assertCount(2, $subscriber->mailingLists()->get());
 
-        sleep(1);
-        dump(4);
-        dump($subscriber);
         $getResponseMailingService->addSubscriberToSubscriberList($subscriber, $getResponseNextSubscriberList);
         $this->assertTrue($subscriber->mailingLists()->has($sendgridSubscriberList));
         $this->assertTrue($subscriber->mailingLists()->has($getResponseSubscriberList));
         $this->assertTrue($subscriber->mailingLists()->has($getResponseNextSubscriberList));
         $this->assertCount(3, $subscriber->mailingLists()->get());
 
-        dump(5);
-        dump($subscriber);
         $sendgridMailingService->addSubscriberToSubscriberList($subscriber, $sendgridNextSubscriberList);
         $this->assertTrue($subscriber->mailingLists()->has($sendgridSubscriberList));
         $this->assertTrue($subscriber->mailingLists()->has($getResponseSubscriberList));
@@ -157,9 +146,7 @@ class DeleteSubscriberFromSubscriberListTest extends TestCase
         $this->assertTrue($subscriber->mailingLists()->has($sendgridNextSubscriberList));
         $this->assertCount(4, $subscriber->mailingLists()->get());
 
-        sleep(600);
-        dump(6);
-        dump($subscriber);
+        sleep(1200);
         // now when subscriberLists are added and confirmed, delete it
         $sendgridMailingService->deleteSubscriberFromSubscriberList($subscriber, $sendgridSubscriberList);
         $this->assertFalse($subscriber->mailingLists()->has($sendgridSubscriberList));
@@ -168,9 +155,6 @@ class DeleteSubscriberFromSubscriberListTest extends TestCase
         $this->assertTrue($subscriber->mailingLists()->has($sendgridNextSubscriberList));
         $this->assertCount(3, $subscriber->mailingLists()->get());
 
-        sleep(10);
-        dump(7);
-        dump($subscriber);
         $getResponseMailingService->deleteSubscriberFromSubscriberList($subscriber, $getResponseSubscriberList);
         $this->assertFalse($subscriber->mailingLists()->has($sendgridSubscriberList));
         $this->assertFalse($subscriber->mailingLists()->has($getResponseSubscriberList));
@@ -178,9 +162,6 @@ class DeleteSubscriberFromSubscriberListTest extends TestCase
         $this->assertTrue($subscriber->mailingLists()->has($sendgridNextSubscriberList));
         $this->assertCount(2, $subscriber->mailingLists()->get());
 
-        sleep(10);
-        dump(8);
-        dump($subscriber);
         $getResponseMailingService->deleteSubscriberFromSubscriberList($subscriber, $getResponseNextSubscriberList);
         $this->assertFalse($subscriber->mailingLists()->has($sendgridSubscriberList));
         $this->assertFalse($subscriber->mailingLists()->has($getResponseSubscriberList));
@@ -188,9 +169,6 @@ class DeleteSubscriberFromSubscriberListTest extends TestCase
         $this->assertTrue($subscriber->mailingLists()->has($sendgridNextSubscriberList));
         $this->assertCount(1, $subscriber->mailingLists()->get());
 
-        sleep(10);
-        dump(9);
-        dump($subscriber);
         $sendgridMailingService->deleteSubscriberFromSubscriberList($subscriber, $sendgridNextSubscriberList);
         $this->assertTrue($subscriber->mailingLists()->isEmpty());
         $this->assertFalse($subscriber->mailingLists()->has($sendgridSubscriberList));
@@ -198,9 +176,6 @@ class DeleteSubscriberFromSubscriberListTest extends TestCase
         $this->assertFalse($subscriber->mailingLists()->has($getResponseNextSubscriberList));
         $this->assertFalse($subscriber->mailingLists()->has($sendgridNextSubscriberList));
         $this->assertCount(0, $subscriber->mailingLists()->get());
-
-        dump('end');
-        dump($subscriber);
     }
 
     /**

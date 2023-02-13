@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\SubscriberManager\Subscriber;
+namespace App\Interfaces\Services\SubscriberManager\Subscriber;
 
 use App\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListManager;
 use App\ValueObjects\Email;
