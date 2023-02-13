@@ -4,12 +4,10 @@ namespace App\Exceptions\Service\SubscriberService;
 
 use Exception;
 
-class SubscriberNotFoundException extends Exception
+class SubscriberNotFoundException extends SubscriberBaseException
 {
-
-    public function report()
+    public function __construct(array $debugData = [], string $message = 'Subscriber not found', $code = 0, Exception $previous = null)
     {
-        info('Subscriber not found');
+        parent::__construct($debugData, $message, $code, $previous);
     }
-
 }

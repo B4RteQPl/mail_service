@@ -4,12 +4,10 @@ namespace App\Exceptions\Service\SubscriberService;
 
 use Exception;
 
-class ProviderRateLimitException extends Exception
+class ProviderRateLimitException extends SubscriberBaseException
 {
-
-    public function report()
+    public function __construct(array $debugData = [], string $message = 'Provider rate limit has been reached', $code = 0, Exception $previous = null)
     {
-        info('Provider rate limit has been reached');
+        parent::__construct($debugData, $message, $code, $previous);
     }
-
 }
