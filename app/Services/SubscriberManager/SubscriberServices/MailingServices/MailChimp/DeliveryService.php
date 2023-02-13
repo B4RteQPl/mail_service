@@ -80,7 +80,10 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
             return Responder::for($response)->updateSubscriberFromSearchResult($subscriber);
         } catch (\Exception $e) {
-            throw new SubscriberNotFoundException([], 'Subscriber Not Found');
+            throw new SubscriberNotFoundException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+            ], 'Subscriber Not Found');
         }
     }
 

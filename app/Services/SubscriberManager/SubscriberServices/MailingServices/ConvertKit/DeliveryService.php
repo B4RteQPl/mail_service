@@ -76,20 +76,20 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
         $response = $this->requestWithHeaders()->get($url);
 
         if ($response->json() && $response->json()['total_subscribers'] && $response->json()['total_subscribers'] === 0) {
-            throw new SubscriberNotFoundException([], 'Subscriber Not Found');
+            throw new SubscriberNotFoundException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+            ], 'Subscriber Not Found');
         }
 
         if ($response->status() === 200) {
             return Responder::for($response)->updateSubscriber($subscriber);
         }
 
-        $debugData = [
+        throw new CannotGetSubscriberException([
             'subscriber' => $subscriber->toArray(),
-        ];
-        if ($subscriberList) {
-            $debugData['subscriberList'] = $subscriberList->toArray();
-        }
-        throw new CannotGetSubscriberException($debugData);
+            'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+        ]);
     }
 
     /**

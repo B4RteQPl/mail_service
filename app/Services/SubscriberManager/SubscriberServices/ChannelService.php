@@ -45,7 +45,7 @@ class ChannelService implements ServiceInterface
         return $this->deliveryService->addSubscriber($subscriber);
 
 
-        $this->assertList($mailingList, 'Cannot add subscriber to mailing list, because mailing list type is different than mail provider type');
+        $this->assertList($subscriberList, 'Cannot add subscriber to mailing list, because mailing list type is different than mail provider type');
 
         try {
             $subscriber = $this->verifySubscriber($subscriber);
@@ -54,14 +54,16 @@ class ChannelService implements ServiceInterface
             try {
                 $subscriber = $this->deliveryService->addSubscriber($subscriber);
             } catch (SubscriberAddingIsNotSupportedException $e) {
-                return $this->deliveryService->addSubscriberDraftToSubscriberList($subscriber, $mailingList);
+                return $this->deliveryService->addSubscriberDraftToSubscriberList($subscriber, $subscriberList);
             }
         } catch (SubscriberAddingIsNotSupportedException $e) {
-            $e->report();
             // in case of skip adding subscriber add it directly to mailing list
         } catch (\Exception $e) {
             // todo test what happens if other exceptions are thrown
-            throw new CannotGetSubscriberException($e->getMessage(), $e->getCode(), $e);
+            throw new CannotGetSubscriberException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList->toArray(),
+            ], $e->getMessage(), $e->getCode(), $e);
         }
 
         return $this->deliveryService->addSubscriberToSubscriberList($subscriber, $mailingList);

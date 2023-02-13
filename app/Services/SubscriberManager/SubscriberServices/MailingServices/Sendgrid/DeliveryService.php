@@ -24,6 +24,9 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     protected string $testGroupId = 'TEST_SENDGRID_GROUP_ID';
     protected string $testSecondGroupId = 'TEST_SENDGRID_SECOND_GROUP_ID';
 
+    /**
+     * @url https://docs.sendgrid.com/api-reference/lists/get-all-lists
+     */
     public function isConnectionOk(): bool
     {
         $url = $this->endpoint . '/v3/marketing/lists';
@@ -88,6 +91,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     /**
      * @throws CannotGetSubscriberException
      * @throws SubscriberNotFoundException
+     *
+     * @url https://docs.sendgrid.com/api-reference/contacts/get-contacts-by-emails
      */
     public function verifySubscriber(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList = null): SubscriberInterface
     {
@@ -105,13 +110,10 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
             return Responder::for($response)->updateSubscriber($subscriber);
         }
 
-        $debugData = [
+        throw new CannotGetSubscriberException([
             'subscriber' => $subscriber->toArray(),
-        ];
-        if ($subscriberList) {
-            $debugData['subscriberList'] = $subscriberList->toArray();
-        }
-        throw new CannotGetSubscriberException($debugData);
+            'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+        ]);
     }
 
 

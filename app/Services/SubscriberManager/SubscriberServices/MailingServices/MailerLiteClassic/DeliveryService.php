@@ -36,6 +36,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
     /**
      * @return SubscriberListInterface[]
+     *
+     * @url https://developers-classic.mailerlite.com/reference/groups
      */
     public function getSubscriberLists(): array
     {
@@ -49,6 +51,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     /**
      * @throws ProviderRateLimitException
      * @throws CannotAddSubscriberException
+     *
+     * @url https://developers-classic.mailerlite.com/reference/create-a-subscriber
      */
     public function addSubscriber(SubscriberInterface $subscriber): SubscriberInterface
     {
@@ -80,6 +84,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     /**
      * @throws CannotGetSubscriberException
      * @throws SubscriberNotFoundException
+     *
+     * @url https://developers-classic.mailerlite.com/reference/single-subscriber
      */
     public function verifySubscriber(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList = null): SubscriberInterface
     {
@@ -88,25 +94,27 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
         $response = $this->requestWithHeaders()->get($url);
 
         if ($response->status() === 404) {
-            throw new SubscriberNotFoundException([], 'Subscriber Not Found');
+            throw new SubscriberNotFoundException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+            ], 'Subscriber Not Found');
         }
 
         if ($response->status() === 200) {
             return Responder::for($response)->updateSubscriber($subscriber);
         }
 
-        $debugData = [
+        throw new CannotGetSubscriberException([
             'subscriber' => $subscriber->toArray(),
-        ];
-        if ($subscriberList) {
-            $debugData['subscriberList'] = $subscriberList->toArray();
-        }
-        throw new CannotGetSubscriberException($debugData);
+            'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+        ]);
     }
 
     /**
      * @throws CannotAddSubscriberToSubscriberListException
      * @throws ProviderRateLimitException
+     *
+     * @url https://developers-classic.mailerlite.com/reference/groupsby_group_namesubscriberssubscriber_idassign
      */
     public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
@@ -134,6 +142,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
     /**
      * @throws CannotDeleteSubscriberFromSubscriberListException
+     *
+     * @url https://developers-classic.mailerlite.com/reference/remove-subscriber
      */
     public function deleteSubscriberFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {

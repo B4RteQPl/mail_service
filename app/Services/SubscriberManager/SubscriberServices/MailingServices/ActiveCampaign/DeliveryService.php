@@ -33,6 +33,9 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
         $this->endpoint = $apiUrl . '/api/3';
     }
 
+    /**
+     * @url https://developers.activecampaign.com/reference/retrieve-all-lists
+     */
     public function isConnectionOk(): bool
     {
         $url = $this->endpoint . '/lists';
@@ -43,6 +46,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
     /**
      * @return SubscriberListInterface[]
+     *
+     * @url https://developers.activecampaign.com/reference/retrieve-all-lists
      */
     public function getSubscriberLists(): array
     {
@@ -56,6 +61,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     /**
      * @throws ProviderRateLimitException
      * @throws CannotAddSubscriberException
+     *
+     * @url https://developers.activecampaign.com/reference/create-a-new-contact
      */
     public function addSubscriber(SubscriberInterface $subscriber): SubscriberInterface
     {
@@ -85,6 +92,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     /**
      * @throws CannotGetSubscriberException
      * @throws SubscriberNotFoundException
+     *
+     * @url https://developers.activecampaign.com/reference/list-all-contacts
      */
     public function verifySubscriber(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList = null): SubscriberInterface
     {
@@ -93,29 +102,34 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
         $response = $this->requestWithHeaders()->get($url);
 
         if ($response->status() === 404) {
-            throw new SubscriberNotFoundException([], 'Subscriber Not Found');
+            throw new SubscriberNotFoundException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+            ], 'Subscriber Not Found');
         }
 
         if ((int) $response->json()['meta']['total'] === 0) {
-            throw new SubscriberNotFoundException([], 'Subscriber Not Found');
+            throw new SubscriberNotFoundException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+            ], 'Subscriber Not Found');
         }
 
         if (in_array($response->status(), [200, 201])) {
             return Responder::for($response)->updateSubscriberFromSearchResult($subscriber);
         }
 
-        $debugData = [
+        throw new CannotGetSubscriberException([
             'subscriber' => $subscriber->toArray(),
-        ];
-        if ($subscriberList) {
-            $debugData['subscriberList'] = $subscriberList->toArray();
-        }
-        throw new CannotGetSubscriberException($debugData);
+            'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+        ]);
     }
 
     /**
      * @throws CannotAddSubscriberToSubscriberListException
      * @throws ProviderRateLimitException
+     *
+     * @url https://developers.activecampaign.com/reference/update-list-status-for-contact
      */
     public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
@@ -148,6 +162,9 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
     /**
      * @throws CannotDeleteSubscriberFromSubscriberListException
+     * @throws ProviderRateLimitException
+     *
+     * @url https://developers.activecampaign.com/reference/update-list-status-for-contact
      */
     public function deleteSubscriberFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {

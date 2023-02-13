@@ -67,7 +67,10 @@ class MailingService implements ServiceInterface
             // in case of skip adding subscriber add it directly to mailing list
         } catch (\Exception $e) {
             // todo test what happens if other exceptions are thrown
-            throw new CannotGetSubscriberException([], $e->getMessage(), $e->getCode(), $e);
+            throw new CannotGetSubscriberException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList->toArray(),
+            ], $e->getMessage(), $e->getCode(), $e);
         }
 
         return $this->deliveryService->addSubscriberToSubscriberList($subscriber, $subscriberList);

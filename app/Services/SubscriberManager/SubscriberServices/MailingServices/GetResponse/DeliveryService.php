@@ -24,6 +24,10 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     protected string $testGroupId = 'TEST_GETRESPONSE_GROUP_ID';
     protected string $testSecondGroupId = 'TEST_GETRESPONSE_SECOND_GROUP_ID';
 
+
+    /**
+     * @url https://apireference.getresponse.com/#operation/getAccount
+     */
     public function isConnectionOk(): bool
     {
         $url = $this->endpoint . '/accounts';
@@ -35,6 +39,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
     /**
      * @return SubscriberListInterface[]
+     *
+     * @url https://apireference.getresponse.com/#operation/getCampaignList
      */
     public function getSubscriberLists(): array
     {
@@ -59,6 +65,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
     /**
      * @throws CannotGetSubscriberException
      * @throws SubscriberNotFoundException
+     *
+     * @url https://apireference.getresponse.com/#operation/getContactsFromCampaign
      */
     public function verifySubscriber(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList = null): SubscriberInterface
     {
@@ -67,25 +75,27 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
         $response = $this->requestWithHeaders()->get($url);
 
         if ($response->status() === 404) {
-            throw new SubscriberNotFoundException([], 'Subscriber Not Found');
+            throw new SubscriberNotFoundException([
+                'subscriber' => $subscriber->toArray(),
+                'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+            ], 'Subscriber Not Found');
         }
 
         if ($response->status() === 200) {
             return Responder::for($response)->updateSubscriber($subscriber);
         }
 
-        $debugData = [
+        throw new CannotGetSubscriberException([
             'subscriber' => $subscriber->toArray(),
-        ];
-        if ($subscriberList) {
-            $debugData['subscriberList'] = $subscriberList->toArray();
-        }
-        throw new CannotGetSubscriberException($debugData);
+            'subscriberList' => $subscriberList ? $subscriberList->toArray() : '',
+        ]);
     }
 
     /**
      * @throws CannotAddSubscriberToSubscriberListException
      * @throws ProviderRateLimitException
+     *
+     * @url https://apireference.getresponse.com/#operation/createContact
      */
     public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
@@ -119,6 +129,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
     /**
      * @throws CannotDeleteSubscriberFromSubscriberListException
+     *
+     * @url https://apireference.getresponse.com/#operation/deleteContact
      */
     public function deleteSubscriberFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
