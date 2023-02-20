@@ -25,6 +25,27 @@ class ChannelService implements ServiceInterface
         return $this->deliveryService->isConnectionOk();
     }
 
+    /**
+     * @return SubscriberListInterface[]
+     */
+    public function getCommunityList(): array
+    {
+        return $this->deliveryService->getCommunityList();
+    }
+
+    /**
+     * @return SubscriberListInterface[]
+     */
+    public function getCommunitySpaceList(SubscriberListInterface $community): array
+    {
+        return $this->deliveryService->getCommunitySpaceList($community);
+    }
+
+    public function addSubscriberToCommunitySpaceList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    {
+        return $this->deliveryService->addSubscriberToCommunitySpaceList($subscriber, $subscriberList);
+    }
+
     public function getSubscriberLists(): array
     {
         return $this->deliveryService->getSubscriberLists();

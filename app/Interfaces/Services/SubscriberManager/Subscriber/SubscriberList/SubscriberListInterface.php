@@ -11,6 +11,8 @@ interface SubscriberListInterface
     public function setType(string $type): void;
     public function hasType(string $type): bool;
 
+    public function forList(SubscriberListInterface $list): void;
+
     public function setStatusNotVerified(): void;
     public function setStatusVerified(): void;
     public function setStatusVerificationPending(): void;

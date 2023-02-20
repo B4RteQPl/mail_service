@@ -24,9 +24,9 @@ class SubscriberManager implements SubscriberManagerInterface
     /**
      * @return SubscriberListInterface[]
      */
-    public function getLists(): array
+    public function getSubscriberList(): array
     {
-        return $this->service->getLists();
+        return $this->service->getSubscriberList();
     }
 
     public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
@@ -34,8 +34,8 @@ class SubscriberManager implements SubscriberManagerInterface
         return $this->service->addSubscriberToSubscriberList($subscriber, $subscriberList);
     }
 
-    public function deleteSubscriberFromList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    public function deleteSubscriberFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
-        return $this->service->deleteSubscriberFromList($subscriber, $subscriberList);
+        return $this->service->deleteSubscriberFromSubscriberList($subscriber, $subscriberList);
     }
 }

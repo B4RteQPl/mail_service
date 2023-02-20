@@ -27,9 +27,9 @@ class MockProvider extends TestCase
         $service = $this->createMock(ServiceInterface::class);
 
         $service->method('isConnectionOk')->willReturn(true);
-        $service->method('getLists')->willReturn([$this->getSubscriberListMock()]);
+        $service->method('getSubscriberList')->willReturn([$this->getSubscriberListMock()]);
         $service->method('addSubscriberToSubscriberList')->willReturn($this->getSubscriberMock());
-        $service->method('deleteSubscriberFromList')->willReturn($this->getSubscriberMock());
+        $service->method('deleteSubscriberFromSubscriberList')->willReturn($this->getSubscriberMock());
 
         return $service;
     }
@@ -39,9 +39,9 @@ class MockProvider extends TestCase
         $service = $this->createMock(ServiceInterface::class);
 
         $service->method('isConnectionOk')->willReturn(false);
-        $service->method('getLists')->willReturn([$this->getSubscriberListMock()]);
+        $service->method('getSubscriberList')->willReturn([$this->getSubscriberListMock()]);
         $service->method('addSubscriberToSubscriberList')->willReturn($this->getSubscriberMock());
-        $service->method('deleteSubscriberFromList')->willReturn($this->getSubscriberMock());
+        $service->method('deleteSubscriberFromSubscriberList')->willReturn($this->getSubscriberMock());
 
         return $service;
     }
@@ -51,9 +51,9 @@ class MockProvider extends TestCase
         $subscriberManager = $this->createMock(SubscriberManagerInterface::class);
 
         $subscriberManager->method('isConnectionOk')->willReturn(true);
-        $subscriberManager->method('getLists')->willReturn([$this->getSubscriberListMock()]);
+        $subscriberManager->method('getSubscriberList')->willReturn([$this->getSubscriberListMock()]);
         $subscriberManager->method('addSubscriberToSubscriberList')->willReturn($this->getSubscriberMock());
-        $subscriberManager->method('deleteSubscriberFromList')->willReturn($this->getSubscriberMock());
+        $subscriberManager->method('deleteSubscriberFromSubscriberList')->willReturn($this->getSubscriberMock());
 
         return $subscriberManager;
     }
@@ -62,7 +62,7 @@ class MockProvider extends TestCase
     {
         $subscriberListManager = $this->createMock(SubscriberListManagerInterface::class);
 
-        $subscriberListManager->method('getLists')->willReturn([$this->getSubscriberListMock()]);
+        $subscriberListManager->method('getSubscriberList')->willReturn([$this->getSubscriberListMock()]);
         $subscriberListManager->method('getList')->willReturn($this->getSubscriberListMock());
         $subscriberListManager->method('addList')->willReturn($this->getSubscriberListMock());
         $subscriberListManager->method('deleteList')->willReturn($this->getSubscriberListMock());

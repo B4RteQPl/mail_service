@@ -14,6 +14,7 @@ class DeliveryService extends BaseDeliveryService implements ChannelDeliveryServ
     const TYPE = 'CIRCLE_SO';
     protected string $type = self::TYPE;
     protected string $endpoint = 'https://app.circle.so/api/v1';
+    protected string $communityId = '1';
 
     public function isConnectionOk(): bool
     {
@@ -21,52 +22,122 @@ class DeliveryService extends BaseDeliveryService implements ChannelDeliveryServ
 
         $response = $this->requestWithHeaders()->get($url);
 
-        return $response->status() === 200;
+        return !empty($response->json()['id']);
     }
 
-    public function getCommunityId(): string
+    /**
+     * @return SubscriberListInterface[]
+     */
+    public function getCommunityList(): array
     {
         $url = $this->endpoint . '/communities';
 
         $response = $this->requestWithHeaders()->get($url);
 
-        return $response->status() === 200;
+        return Responder::for($response)->getCommunityList();
     }
 
-    public function getSubscriberLists(): array
+    /**
+     * @return SubscriberListInterface[]
+     * @url https://api.circle.so/#c2faf0c4-9903-4cdb-84c5-6a587e0f6c40
+     */
+    public function getCommunitySpaceList(SubscriberListInterface $communityList): array
     {
-        $url = $this->endpoint . '/space_groups?community_id={{community_id}}';
+        $url = $this->endpoint . '/spaces?community_id='. $communityList->id;
+
+        $response = $this->requestWithHeaders()->get($url);
+
+        return Responder::for($response)->getCommunitySpaceList($communityList);
+    }
+
+    public function getSpacesGroups(): array
+    {
+        $url = $this->endpoint . '/space_groups?community_id='. $this->communityId;
 
         $response = $this->requestWithHeaders()->get($url);
 
         return Responder::for($response)->getChannelList();
     }
 
-    public function verifySubscriber(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    public function verifySubscriberSpace(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
-        $url = $this->endpoint . '/space_group_members?email=' . $subscriber->email->get() . '&space_group_id=' . $subscriberList->id . '&community_id=' . $this->getCommunityId() . '';
+        $url = $this->endpoint . '/space_members?email=' . $subscriber->email->get() . '&space_id=' . $subscriberList->id . '&community_id=' . $subscriberList->list->id;
 
         $response = $this->requestWithHeaders()->get($url);
 
         return Responder::for($response)->updateSubscriber($subscriber, $subscriberList);
     }
 
-    public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    public function verifySubscriberSpaceGroup(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
-        $url = $this->endpoint . '/space_group_members?email=' . $subscriber->email->get() . '&space_group_id=' . $subscriberList->id . '&community_id=' . $this->getCommunityId() . '';
+        $url = $this->endpoint . '/space_group_members?email=' . $subscriber->email->get() . '&space_group_id=' . $subscriberList->id . '&community_id=' . $this->communityId;
+
+        $response = $this->requestWithHeaders()->get($url);
+
+        return Responder::for($response)->updateSubscriber($subscriber, $subscriberList);
+    }
+
+    public function addSubscriberToCommunitySpaceList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    {
+        https://app.circle.so/api/v1/community_members
+        //?email=member@community.com
+        //&name=John Doe
+        // &community_id={{community_id}}
+        //&space_ids[]=1
+        //&space_group_ids[]=2
+        //&member_tag_ids[]=5
+        //&skip_invitation=true
+        //&location=New York
+
+        $url = $this->endpoint . '/community_members?email=' . $subscriber->email->get() . '&space_id=' . $subscriberList->id . '&community_id=' . $this->communityId;
 
         $response = $this->requestWithHeaders()->post($url);
 
         return Responder::for($response)->updateSubscriberAfterAddToSubscriberList($subscriber, $subscriberList);
     }
 
-    public function deleteSubscriberFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    public function deleteSubscriberFromCommunity()
     {
-        $url = $this->endpoint . '/space_group_members?email='.$subscriber->email->get().'&space_group_id=' .$subscriberList->id.'&community_id='.$this->getCommunityId().'';
+        https://app.circle.so/api/v1/community_members?community_id={{community_id}}&email=different@user.com
+    }
+
+    public function deleteSubscriberFromCommunitySpace()
+    {
+        https://app.circle.so/api/v1/community_members?community_id={{community_id}}&email=different@user.com
+    }
+
+    public function deleteSubscriberFromCommunitySpaceGroup()
+    {
+        https://app.circle.so/api/v1/community_members?community_id={{community_id}}&email=different@user.com
+    }
+
+
+
+    public function deleteSubscriberFromSpace(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    {
+        $url = $this->endpoint . '/space_members?email='.$subscriber->email->get().'&space_id=' .$subscriberList->id.'&community_id='.$this->communityId;
 
         $response = $this->requestWithHeaders()->delete($url);
 
         return Responder::for($response)->updateSubscriberAfterDeleteFromSubscriberList($subscriber, $subscriberList);
+    }
+
+    public function addSubscriberToSpaceGroup(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    {
+        $url = $this->endpoint . '/space_group_members?email=' . $subscriber->email->get() . '&space_group_id=' . $subscriberList->id . '&community_id=' . $this->communityId;
+
+        $response = $this->requestWithHeaders()->post($url);
+
+        return Responder::for($response)->updateSubscriberAfterAddToSpaceGroup($subscriber, $subscriberList);
+    }
+
+    public function deleteSubscriberFromSpaceGroup(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
+    {
+        $url = $this->endpoint . '/space_group_members?email='.$subscriber->email->get().'&space_group_id=' .$subscriberList->id.'&community_id='.$this->communityId;
+
+        $response = $this->requestWithHeaders()->delete($url);
+
+        return Responder::for($response)->updateSubscriberAfterDeleteFromSpaceGroup($subscriber, $subscriberList);
     }
 
     /**

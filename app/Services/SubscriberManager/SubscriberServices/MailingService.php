@@ -53,27 +53,29 @@ class MailingService implements ServiceInterface
      */
     public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
-        $this->assertSubscriberList($subscriber, $subscriberList, 'Cannot add subscriber to mailing list, because mailing list type is different than mail provider type');
-
-        try {
-            $this->verifySubscriber($subscriber, $subscriberList);
-        } catch (SubscriberNotFoundException $e) {
-            try {
-                $this->deliveryService->addSubscriber($subscriber);
-            } catch (SubscriberAddingIsNotSupportedException $e) {
-                return $this->deliveryService->addSubscriberToSubscriberList($subscriber, $subscriberList);
-            }
-        } catch (SubscriberAddingIsNotSupportedException $e) {
-            // in case of skip adding subscriber add it directly to mailing list
-        } catch (\Exception $e) {
-            // todo test what happens if other exceptions are thrown
-            throw new CannotGetSubscriberException([
-                'subscriber' => $subscriber->toArray(),
-                'subscriberList' => $subscriberList->toArray(),
-            ], $e->getMessage(), $e->getCode(), $e);
-        }
-
         return $this->deliveryService->addSubscriberToSubscriberList($subscriber, $subscriberList);
+
+        //        $this->assertSubscriberList($subscriber, $subscriberList, 'Cannot add subscriber to mailing list, because mailing list type is different than mail provider type');
+        //
+        //        try {
+        //            $this->verifySubscriber($subscriber, $subscriberList);
+        //        } catch (SubscriberNotFoundException $e) {
+        //            try {
+        //                $this->deliveryService->addSubscriber($subscriber);
+        //            } catch (SubscriberAddingIsNotSupportedException $e) {
+        //                return $this->deliveryService->addSubscriberToSubscriberList($subscriber, $subscriberList);
+        //            }
+        //        } catch (SubscriberAddingIsNotSupportedException $e) {
+        //            // in case of skip adding subscriber add it directly to mailing list
+        //        } catch (\Exception $e) {
+        //            // todo test what happens if other exceptions are thrown
+        //            throw new CannotGetSubscriberException([
+        //                'subscriber' => $subscriber->toArray(),
+        //                'subscriberList' => $subscriberList->toArray(),
+        //            ], $e->getMessage(), $e->getCode(), $e);
+        //        }
+        //
+        //        return $this->deliveryService->addSubscriberToSubscriberList($subscriber, $subscriberList);
     }
 
     /**

@@ -14,7 +14,7 @@ interface SubscriberManagerInterface
     /**
      * @return SubscriberListInterface[]
      */
-    public function getLists(): array;
+    public function getSubscriberList(): array;
     public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface;
-    public function deleteSubscriberFromList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface;
+    public function deleteSubscriberFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface;
 }

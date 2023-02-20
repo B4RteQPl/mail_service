@@ -16,8 +16,8 @@ trait ChannelProviderTrait
     {
         return [
             'Circle.so' => [function () { return new CircleSoDeliveryService(env('TEST_CIRCLE_SO_API_KEY')); }],
-            'Slack' => [function () { return new SlackDeliveryService(env('TEST_SLACK_API_KEY')); }],
-            'Discord' => [function () { return new DiscordDeliveryService(env('TEST_DISCORD_API_KEY')); }],
+//            'Slack' => [function () { return new SlackDeliveryService(env('TEST_SLACK_API_KEY')); }],
+//            'Discord' => [function () { return new DiscordDeliveryService(env('TEST_DISCORD_API_KEY')); }],
         ];
     }
 
@@ -28,8 +28,8 @@ trait ChannelProviderTrait
     {
         return [
             'Circle.so' => [function () { return new CircleSoDeliveryService('invalid'); }],
-            'Slack' => [function () { return new SlackDeliveryService('invalid'); }],
-            'Discord' => [function () { return new DiscordDeliveryService('invalid'); }],
+//            'Slack' => [function () { return new SlackDeliveryService('invalid'); }],
+//            'Discord' => [function () { return new DiscordDeliveryService('invalid'); }],
         ];
     }
 

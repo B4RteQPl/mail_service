@@ -11,6 +11,8 @@ use App\Exceptions\Services\SubscriberManager\SubscriberNotFoundException;
 use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
 use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
 use App\Interfaces\Services\SubscriberManager\SubscriberServices\MailingServices\MailDeliveryServiceInterface;
+use App\Services\ExternalServices\ActiveCampaign\ActiveCampaign;
+use App\Services\ExternalServices\ActiveCampaign\Client\ActiveCampaignClient;
 use App\Services\SubscriberManager\SubscriberServices\MailingServices\BaseDeliveryService;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
@@ -28,6 +30,8 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
 
     public function __construct(string $authKey, string $apiUrl = null)
     {
+        $this->client = new ActiveCampaignClient($authKey, $apiUrl);
+
         parent::__construct($authKey, $apiUrl);
 
         $this->endpoint = $apiUrl . '/api/3';
@@ -38,10 +42,11 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
      */
     public function isConnectionOk(): bool
     {
-        $url = $this->endpoint . '/lists';
-        $response = $this->requestWithHeaders()->get($url);
-
-        return $response->status() === 200;
+        return $this->client->isConnectionOk();
+//        $url = $this->endpoint . '/lists';
+//        $response = $this->requestWithHeaders()->get($url);
+//
+//        return $response->status() === 200;
     }
 
     /**
@@ -133,31 +138,42 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
      */
     public function addSubscriberToSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
-        $url = $this->endpoint . '/contactLists';
+        $params = [
+            'listId' => $subscriberList->id,
+            'email' => $subscriber->email->get(),
+            'firstName' => $subscriber->firstName->get(),
+            'lastName' => $subscriber->lastName->get(),
+        ];
 
-        $contactList = array('contactList' => [
-            'list' => $subscriberList->id,
-            'contact' => $subscriber->id,
-            'status' => self::STATUS_SUBSCRIBED,
-        ]);
+        $activeCampaign = new ActiveCampaign($this->client);
 
-        $response = $this->requestWithHeaders()->post($url, $contactList);
+        return $activeCampaign->addContactToList->execute($params);
 
-        if (in_array($response->status(), [200, 201])) {
-            return Responder::for($response)->updateSubscriberAfterAddToSubscriberList($subscriber, $subscriberList);
-        }
-
-        if ($response->status() === 429) {
-            throw new ProviderRateLimitException([
-                'subscriber' => $subscriber->toArray(),
-                'subscriberList' => $subscriberList->toArray(),
-            ]);
-        }
-
-        throw new CannotAddSubscriberToSubscriberListException([
-            'subscriber' => $subscriber->toArray(),
-            'subscriberList' => $subscriberList->toArray()
-        ]);
+        //        $url = $this->endpoint . '/contactLists';
+        //
+        //        $contactList = array('contactList' => [
+        //            'list' => $subscriberList->id,
+        //            'contact' => $subscriber->id,
+        //            'status' => self::STATUS_SUBSCRIBED,
+        //        ]);
+        //
+        //        $response = $this->requestWithHeaders()->post($url, $contactList);
+        //
+        //        if (in_array($response->status(), [200, 201])) {
+        //            return Responder::for($response)->updateSubscriberAfterAddToSubscriberList($subscriber, $subscriberList);
+        //        }
+        //
+        //        if ($response->status() === 429) {
+        //            throw new ProviderRateLimitException([
+        //                'subscriber' => $subscriber->toArray(),
+        //                'subscriberList' => $subscriberList->toArray(),
+        //            ]);
+        //        }
+        //
+        //        throw new CannotAddSubscriberToSubscriberListException([
+        //            'subscriber' => $subscriber->toArray(),
+        //            'subscriberList' => $subscriberList->toArray()
+        //        ]);
     }
 
     /**
@@ -168,31 +184,40 @@ class DeliveryService extends BaseDeliveryService implements MailDeliveryService
      */
     public function deleteSubscriberFromSubscriberList(SubscriberInterface $subscriber, SubscriberListInterface $subscriberList): SubscriberInterface
     {
-        $url = $this->endpoint . '/contactLists';
+        $params = [
+            'listId' => $subscriberList->id,
+            'email' => $subscriber->email->get(),
+        ];
 
-        $contactList = array('contactList' => [
-            'list' => $subscriberList->id,
-            'contact' => $subscriber->id,
-            'status' => self::STATUS_UNSUBSCRIBED,
-        ]);
+        $activeCampaign = new ActiveCampaign($this->client);
 
-        $response = $this->requestWithHeaders()->post($url, $contactList);
+        return $activeCampaign->removeContactFromList->execute($params);
 
-        if (in_array($response->status(), [200, 201])) {
-            return Responder::for($response)->updateSubscriberAfterDeleteFromSubscriberList($subscriber, $subscriberList);
-        }
-
-        if ($response->status() === 429) {
-            throw new ProviderRateLimitException([
-                'subscriber' => $subscriber->toArray(),
-                'subscriberList' => $subscriberList->toArray(),
-            ]);
-        }
-
-        throw new CannotDeleteSubscriberFromSubscriberListException([
-            'subscriber' => $subscriber->toArray(),
-            'subscriberList' => $subscriberList->toArray()
-        ]);
+        //        $url = $this->endpoint . '/contactLists';
+        //
+        //        $contactList = array('contactList' => [
+        //            'list' => $subscriberList->id,
+        //            'contact' => $subscriber->id,
+        //            'status' => self::STATUS_UNSUBSCRIBED,
+        //        ]);
+        //
+        //        $response = $this->requestWithHeaders()->post($url, $contactList);
+        //
+        //        if (in_array($response->status(), [200, 201])) {
+        //            return Responder::for($response)->updateSubscriberAfterDeleteFromSubscriberList($subscriber, $subscriberList);
+        //        }
+        //
+        //        if ($response->status() === 429) {
+        //            throw new ProviderRateLimitException([
+        //                'subscriber' => $subscriber->toArray(),
+        //                'subscriberList' => $subscriberList->toArray(),
+        //            ]);
+        //        }
+        //
+        //        throw new CannotDeleteSubscriberFromSubscriberListException([
+        //            'subscriber' => $subscriber->toArray(),
+        //            'subscriberList' => $subscriberList->toArray()
+        //        ]);
     }
 
     private function requestWithHeaders(): PendingRequest

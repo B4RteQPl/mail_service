@@ -5,6 +5,8 @@ namespace App\Services\SubscriberManager\SubscriberServices\ChannelServices\Circ
 use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberInterface;
 use App\Interfaces\Services\SubscriberManager\Subscriber\SubscriberList\SubscriberListInterface;
 use App\Services\SubscriberManager\Subscriber\SubscriberList\types\ChannelList;
+use App\Services\SubscriberManager\Subscriber\SubscriberList\types\CommunityList;
+use App\Services\SubscriberManager\Subscriber\SubscriberList\types\CommunitySpaceList;
 
 class Responder
 {
@@ -13,6 +15,7 @@ class Responder
 
     private function __construct($response)
     {
+        dump($response);
         $this->response = $response;
     }
 
@@ -22,19 +25,37 @@ class Responder
     }
 
     /**
-     * @return ChannelList[]
+     * @return SubscriberListInterface[]
      */
-    public function getChannelList(): array
+    public function getCommunityList(): array
     {
-        $channels = [];
+        $communities = [];
 
-        foreach ($this->response['lists'] as $group) {
-            $channel = new ChannelList($group['id'], $group['name'], DeliveryService::TYPE);
-
-            $channels[] = $channel;
+        foreach ($this->response as $community) {
+            $community = new CommunityList($community['id'], $community['name'], DeliveryService::TYPE);
+            $community->setStatusVerified();
+            $communities[] = $community;
         }
 
-        return $channels;
+        return $communities;
+    }
+
+    /**
+     * @return ChannelList[]
+     */
+    public function getCommunitySpaceList(SubscriberListInterface $communityList): array
+    {
+        $spaces = [];
+
+        foreach ($this->response as $space) {
+            $space = new CommunitySpaceList($space['id'], $space['name'], DeliveryService::TYPE);
+            $space->setStatusVerified();
+            $space->forList($communityList);
+
+            $spaces[] = $space;
+        }
+
+        return $spaces;
     }
 
     public function updateSubscriber(SubscriberInterface $subscriber): SubscriberInterface

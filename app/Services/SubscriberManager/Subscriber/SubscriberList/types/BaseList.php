@@ -15,6 +15,7 @@ class BaseList implements SubscriberListInterface
     protected string $name;
     protected string $type;
     protected ?string $status = self::STATUS_NOT_VERIFIED;
+    protected ?SubscriberListInterface $list = null;
 
     public function __construct(string $id, string $name, string $type)
     {
@@ -38,6 +39,9 @@ class BaseList implements SubscriberListInterface
         if ($name === 'type') {
             return $this->type;
         }
+        if ($name === 'list') {
+            return $this->list;
+        }
     }
 
     public function setId(string $id): void
@@ -59,6 +63,11 @@ class BaseList implements SubscriberListInterface
         $this->assertNotEmpty($type, 'type');
 
         $this->type = $type;
+    }
+
+    public function forList(?SubscriberListInterface $list): void
+    {
+        $this->list = $list;
     }
 
     public function hasType(string $type): bool
