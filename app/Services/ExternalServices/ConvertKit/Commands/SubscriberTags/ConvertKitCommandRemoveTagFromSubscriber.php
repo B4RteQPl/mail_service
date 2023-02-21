@@ -31,37 +31,17 @@ class ConvertKitCommandRemoveTagFromSubscriber extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Usuń kontakt z tagiem',
+                'en' => 'Remove contact with tag',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-                'email' => [
-                    'type' => 'string',
-                    'required' => true,
+            'fields' => [
+                'tagId' => [
+                    'type' => 'select',
+                    'options' => $this->client->listTags(),
                     'placeholder' => [
-                        'pl' => 'Adres email',
-                        'en' => 'Email address',
-                    ],
-                ],
-                'firstName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Imię',
-                        'en' => 'First name',
-                    ],
-                ],
-                'lastName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Nazwisko',
-                        'en' => 'Last name',
+                        'pl' => 'Wybierz tag do usunięcia',
+                        'en' => 'Select tag to remove'
                     ],
                 ],
             ],

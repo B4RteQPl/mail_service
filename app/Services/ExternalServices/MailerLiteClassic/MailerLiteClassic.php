@@ -3,23 +3,15 @@
 namespace App\Services\ExternalServices\MailerLiteClassic;
 
 use App\Services\ExternalServices\AbstractCommandLoader;
-use App\Services\ExternalServices\MailerLite\Commands\Accounts\MailerLiteClassicCommandIsConnectionOk;
-use App\Services\ExternalServices\MailerLite\Commands\SubscriberGroups\MailerLiteClassicCommandAssignSubscriberToGroup;
-use App\Services\ExternalServices\MailerLite\Commands\SubscriberGroups\MailerLiteClassicCommandGetListAllGroups;
-use App\Services\ExternalServices\MailerLite\Commands\SubscriberGroups\MailerLiteClassicCommandUnAssignSubscriberFromGroup;
-use App\Services\ExternalServices\MailerLite\Commands\Subscribers\MailerLiteClassicCommandCreateSubscriber;
-use App\Services\ExternalServices\MailerLite\Commands\Subscribers\MailerLiteClassicCommandFetchSubscriber;
 use App\Services\ExternalServices\MailerLiteClassic\Client\MailerLiteClassicClient;
+use App\Services\ExternalServices\MailerLiteClassic\Commands\SubscriberGroups\MailerLiteClassicCommandAssignSubscriberToGroup;
+use App\Services\ExternalServices\MailerLiteClassic\Commands\SubscriberGroups\MailerLiteClassicCommandUnAssignSubscriberFromGroup;
 
 class MailerLiteClassic extends AbstractCommandLoader
 {
     protected ?MailerLiteClassicClient $client = null;
 
     const ACTIVE_COMMANDS = [
-        MailerLiteClassicCommandIsConnectionOk::class => 'isConnectionOk',
-        MailerLiteClassicCommandCreateSubscriber::class => 'createSubscriber',
-        MailerLiteClassicCommandFetchSubscriber::class => 'fetchSubscriber',
-        MailerLiteClassicCommandGetListAllGroups::class => 'getListAllGroups',
         MailerLiteClassicCommandAssignSubscriberToGroup::class => 'assignSubscriberToGroup',
         MailerLiteClassicCommandUnAssignSubscriberFromGroup::class => 'unAssignSubscriberFromGroup',
     ];

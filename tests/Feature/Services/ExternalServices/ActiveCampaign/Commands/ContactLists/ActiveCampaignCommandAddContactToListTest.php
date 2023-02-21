@@ -15,10 +15,12 @@ class ActiveCampaignCommandAddContactToListTest extends CommandTestCase
      */
     public function execute()
     {
-        $listId = $this->activeCampaign()->retrieveAllLists->execute()[0]['id'];
-
-        $newUser = $this->getNewUser();
-        $newUser['listId'] = $listId;
+        $newUser = [
+            'email' => $this->getUniqueEmail(),
+            'firstName' => 'John',
+            'lastName' => 'Snow',
+            'listId' => $this->activeCampaign()->retrieveAllLists->execute()[0]['id'],
+        ];
 
         $result = $this->activeCampaign()->addContactToList->execute($newUser);
 
@@ -31,13 +33,9 @@ class ActiveCampaignCommandAddContactToListTest extends CommandTestCase
      */
     public function get_config()
     {
-//        $config = $this->activeCampaign()->setup();
         $config = $this->activeCampaign()->addContactToList->getConfig();
-        dump($config);
-//        dump($config['parameters']['listId']['options']);
 
-//        dump($config);
         $this->assertConfigRequiredFields($config);
-        $this->assertConfigParams($config, ['email', 'firstName', 'lastName']);
+        $this->assertConfigFields($config, ['listId']);
     }
 }

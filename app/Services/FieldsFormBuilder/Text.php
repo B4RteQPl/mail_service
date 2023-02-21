@@ -34,10 +34,7 @@ class Text extends BaseField
         return [
             'type' => 'string',
             'required' => $this->required,
-            'placeholder' => [
-                'pl' => 'Wybierz ' . $this->fieldName,
-                'en' => 'Pick ' . $this->fieldName,
-            ],
+            'placeholder' => $this->placeholder,
         ];
     }
 

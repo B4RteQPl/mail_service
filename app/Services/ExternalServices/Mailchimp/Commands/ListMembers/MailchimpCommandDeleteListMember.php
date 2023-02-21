@@ -10,7 +10,7 @@ class MailchimpCommandDeleteListMember extends AbstractCommand
     public function execute(array $params)
     {
         $email = new Email($params['email']);
-        $listId = $params['list_id'];
+        $listId = $params['listId'];
 
         return $this->client->deleteListMember($email, $listId);
     }
@@ -18,16 +18,19 @@ class MailchimpCommandDeleteListMember extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Usuń kontakt z listy',
+                'en' => 'Remove contact from list',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-
+            'fields' => [
+                'listId' => [
+                    'type' => 'select',
+                    'options' => $this->client->getAllLists(),
+                    'placeholder' => [
+                        'pl' => 'Wybierz listę',
+                        'en' => 'Select list'
+                    ],
+                ],
             ],
         ];
     }

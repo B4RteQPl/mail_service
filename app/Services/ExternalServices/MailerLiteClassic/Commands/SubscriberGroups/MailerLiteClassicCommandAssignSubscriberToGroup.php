@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\ExternalServices\MailerLite\Commands\SubscriberGroups;
+namespace App\Services\ExternalServices\MailerLiteClassic\Commands\SubscriberGroups;
 
 use App\Services\ExternalServices\MailerLiteClassic\Commands\AbstractCommand;
 use App\ValueObjects\Email;
@@ -21,16 +21,19 @@ class MailerLiteClassicCommandAssignSubscriberToGroup extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Dodaj kontakt do grupy',
+                'en' => 'Add contact to group',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-
+            'fields' => [
+                'groupId' => [
+                    'type' => 'select',
+                    'options' => $this->client->getListAllGroups(),
+                    'placeholder' => [
+                        'pl' => 'Wybierz grupę',
+                        'en' => 'Select group'
+                    ],
+                ],
             ],
         ];
     }

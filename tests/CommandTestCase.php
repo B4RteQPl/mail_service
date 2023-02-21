@@ -8,15 +8,15 @@ abstract class CommandTestCase extends TestCase
 
     public function assertConfigRequiredFields(array $config)
     {
-        $this->assertArrayHasKey('title', $config);
-        $this->assertArrayHasKey('description', $config);
-        $this->assertArrayHasKey('parameters', $config);
+        $this->assertArrayHasKey('actionName', $config);
     }
 
-    public function assertConfigParams(array $config, array $params)
+    public function assertConfigFields(array $config, array $fields)
     {
-        foreach ($params as $param) {
-            $this->assertArrayHasKey($param, $config['parameters']);
+        $this->assertArrayHasKey('fields', $config);
+
+        foreach ($fields as $field) {
+            $this->assertArrayHasKey($field, $config['fields']);
         }
     }
 

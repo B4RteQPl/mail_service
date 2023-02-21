@@ -2,7 +2,7 @@
 
 namespace App\Services\ExternalServices\MailerLite\Commands\SubscriberGroups;
 
-use App\Services\ExternalServices\Mailchimp\Commands\AbstractCommand;
+use App\Services\ExternalServices\MailerLite\Commands\AbstractCommand;
 use App\ValueObjects\Email;
 
 class MailerLiteCommandAssignSubscriberToGroup extends AbstractCommand
@@ -21,16 +21,19 @@ class MailerLiteCommandAssignSubscriberToGroup extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Dodaj kontakt do grupy',
+                'en' => 'Add contact to group',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-
+            'fields' => [
+                'groupId' => [
+                    'type' => 'select',
+                    'options' => $this->client->getListAllGroups(),
+                    'placeholder' => [
+                        'pl' => 'Wybierz grupę',
+                        'en' => 'Select group'
+                    ],
+                ],
             ],
         ];
     }

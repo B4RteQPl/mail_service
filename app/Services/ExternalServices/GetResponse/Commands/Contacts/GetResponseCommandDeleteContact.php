@@ -18,16 +18,19 @@ class GetResponseCommandDeleteContact extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Usuń kontakt z kampanii',
+                'en' => 'Remove contact from campaign',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-
+            'fields' => [
+                'campaignId' => [
+                    'type' => 'select',
+                    'options' => $this->client->getCampaignList(),
+                    'placeholder' => [
+                        'pl' => 'Wybierz kampanię',
+                        'en' => 'Select campaign'
+                    ],
+                ],
             ],
         ];
     }

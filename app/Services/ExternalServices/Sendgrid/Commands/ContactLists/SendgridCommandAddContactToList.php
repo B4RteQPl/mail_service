@@ -18,16 +18,19 @@ class SendgridCommandAddContactToList extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Dodaj kontakt do listy',
+                'en' => 'Add contact to list',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-
+            'fields' => [
+                'listId' => [
+                    'type' => 'select',
+                    'options' => $this->client->getAllLists(),
+                    'placeholder' => [
+                        'pl' => 'Wybierz grupę',
+                        'en' => 'Select group'
+                    ],
+                ],
             ],
         ];
     }

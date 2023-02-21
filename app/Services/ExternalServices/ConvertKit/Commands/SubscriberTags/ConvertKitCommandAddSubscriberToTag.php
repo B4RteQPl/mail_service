@@ -12,48 +12,23 @@ class ConvertKitCommandAddSubscriberToTag extends AbstractCommand
         $tagId = $params['tagId'];
         $email = new Email($params['email']);
 
-        try {
-            return $this->client->tagSubscriber($email, $tagId);
-        } catch (\Exception $e) {
-            $this->logException($e);
-            return null;
-        }
+        return $this->client->tagSubscriber($email, $tagId);
     }
 
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Dodaj kontakt z tagiem',
+                'en' => 'Add contact with tag',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-                'email' => [
-                    'type' => 'string',
-                    'required' => true,
+            'fields' => [
+                'tagId' => [
+                    'type' => 'select',
+                    'options' => $this->client->listTags(),
                     'placeholder' => [
-                        'pl' => 'Adres email',
-                        'en' => 'Email address',
-                    ],
-                ],
-                'firstName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Imię',
-                        'en' => 'First name',
-                    ],
-                ],
-                'lastName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Nazwisko',
-                        'en' => 'Last name',
+                        'pl' => 'Wybierz tag do dodania',
+                        'en' => 'Select tag to add'
                     ],
                 ],
             ],

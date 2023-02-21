@@ -15,20 +15,6 @@ abstract class TestCase extends BaseTestCase
         return uniqid('test-') . '@fakedomain.com';
     }
 
-    public function assertConfigRequiredFields(array $config)
-    {
-        $this->assertArrayHasKey('title', $config);
-        $this->assertArrayHasKey('description', $config);
-        $this->assertArrayHasKey('parameters', $config);
-    }
-
-    public function assertConfigParams(array $config, array $params)
-    {
-        foreach ($params as $param) {
-            $this->assertArrayHasKey($param, $config['parameters']);
-        }
-    }
-
     public function getNewUser(): array
     {
         return [

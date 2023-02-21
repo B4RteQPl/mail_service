@@ -17,45 +17,29 @@ class ActiveCampaignCommandRemoveContactFromList extends AbstractCommand
         $listId = $params['listId'];
         $email = new Email($params['email']);
 
-        try {
-            $contact = $this->client->searchContactByEmail($email);
-            if (!$contact) {
-                return null;
-            }
-
-            return $this->client->updateListStatusForContact($listId, $contact['id'], ActiveCampaignClient::LIST_STATUS_UNSUBSCRIBED);
-        } catch (\Exception $e) {
-            $this->logException($e);
+        $contact = $this->client->searchContactByEmail($email);
+        if (!$contact) {
+            // todo return null is bad practice! Change to exception
             return null;
         }
+
+        return $this->client->updateListStatusForContact($listId, $contact['id'], ActiveCampaignClient::LIST_STATUS_UNSUBSCRIBED);
     }
 
     public function getConfig()
     {
         return [
-            'title' => [
-                'en' => 'Remove a User from List',
-                'pl' => 'Usuń użytkownika z listy',
+            'actionName' => [
+                'pl' => 'Usuń z listy',
+                'en' => 'Remove from List',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
+            'fields' => [
                 'listId' => [
-                    'type' => 'string',
-                    'required' => true,
+                    'type' => 'select',
+                    'options' => $this->client->retrieveAllLists(),
                     'placeholder' => [
-                        'pl' => 'Wybierz listę',
-                        'en' => 'Pick a list'
-                    ],
-                ],
-                'email' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Adres email',
-                        'en' => 'Email address',
+                        'pl' => 'Z jakiej listy usunąć?',
+                        'en' => 'From which list remove?'
                     ],
                 ],
             ],

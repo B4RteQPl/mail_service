@@ -18,16 +18,19 @@ class GetResponseCommandCreateContact extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Dodaj kontakt do kampanii',
+                'en' => 'Add contact to campaign',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-
+            'fields' => [
+                'campaignId' => [
+                    'type' => 'select',
+                    'options' => $this->client->getCampaignList(),
+                    'placeholder' => [
+                        'pl' => 'Wybierz kampanię',
+                        'en' => 'Select campaign'
+                    ],
+                ],
             ],
         ];
     }

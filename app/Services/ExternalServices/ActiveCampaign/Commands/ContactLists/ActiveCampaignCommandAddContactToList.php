@@ -22,64 +22,28 @@ class ActiveCampaignCommandAddContactToList extends AbstractCommand
         $firstname = new FirstName($params['firstName']) ?? new FirstName('');
         $lastname = new LastName($params['lastName']) ?? new LastName('');
 
-        try {
-            $contact = $this->client->searchContactByEmail($email);
-            if (!$contact) {
-                $contact = $this->client->createNewContact($email, $firstname, $lastname);
-            }
-
-            return $this->client->updateListStatusForContact($listId, $contact['id'], ActiveCampaignClient::LIST_STATUS_SUBSCRIBED);
-        } catch (\Exception $e) {
-            $this->logException($e);
-            return null;
+        $contact = $this->client->searchContactByEmail($email);
+        if (!$contact) {
+            $contact = $this->client->createNewContact($email, $firstname, $lastname);
         }
+
+        return $this->client->updateListStatusForContact($listId, $contact['id'], ActiveCampaignClient::LIST_STATUS_SUBSCRIBED);
     }
 
-    public function getTranslations()
-    {
-
-    }
     public function getConfig()
     {
         return [
             'actionName' => [
-                'pl' => 'Dodaj kontakt do listy',
-                'en' => 'Add a contact to List',
+                'pl' => 'Dopisz do listy',
+                'en' => 'Add to list',
             ],
-            'parameters' => [
-//                'v2ListId' => SelectField
+            'fields' => [
                 'listId' => [
                     'type' => 'select',
-                    'required' => true,
                     'options' => $this->client->retrieveAllLists(),
                     'placeholder' => [
-                        'pl' => 'Wybierz listę',
-                        'en' => 'Pick a list'
-                    ],
-                ],
-                'emailv2' => Email::;
-                'email' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Adres email',
-                        'en' => 'Email address',
-                    ],
-                ],
-                'firstName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Imię',
-                        'en' => 'First name',
-                    ],
-                ],
-                'lastName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Nazwisko',
-                        'en' => 'Last name',
+                        'pl' => 'Do jakiej listy dopisać?',
+                        'en' => 'To which list add contact?'
                     ],
                 ],
             ],

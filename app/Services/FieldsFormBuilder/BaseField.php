@@ -5,6 +5,7 @@ namespace App\Services\FieldsFormBuilder;
 class BaseField
 {
 
+    private string $type = 'string';
     private string $fieldName;
     private bool $required;
     private array $placeholder = [];
@@ -28,21 +29,18 @@ class BaseField
 
         return $this;
     }
+    static public function make($fieldName)
+    {
+        return new self($fieldName);
+    }
 
     public function toArray()
     {
         return [
-            'type' => 'string',
+            'type' => $this->type,
             'required' => $this->required,
-            'placeholder' => [
-                'pl' => 'Wybierz ' . $this->fieldName,
-                'en' => 'Pick ' . $this->fieldName,
-            ],
+            'placeholder' => $this->placeholder,
         ];
     }
 
-    static public function make($field)
-    {
-        return new self($field);
-    }
 }

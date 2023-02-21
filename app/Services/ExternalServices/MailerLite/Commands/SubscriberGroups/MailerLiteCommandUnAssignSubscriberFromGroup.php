@@ -2,7 +2,7 @@
 
 namespace App\Services\ExternalServices\MailerLite\Commands\SubscriberGroups;
 
-use App\Services\ExternalServices\Mailchimp\Commands\AbstractCommand;
+use App\Services\ExternalServices\MailerLite\Commands\AbstractCommand;
 use App\ValueObjects\Email;
 
 class MailerLiteCommandUnAssignSubscriberFromGroup extends AbstractCommand
@@ -21,16 +21,19 @@ class MailerLiteCommandUnAssignSubscriberFromGroup extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => '',
-                'en' => '',
+            'actionName' => [
+                'pl' => 'Usuń kontakt z grupy',
+                'en' => 'Remove contact from group',
             ],
-            'description' => [
-                'pl' => '',
-                'en' => '',
-            ],
-            'parameters' => [
-
+            'fields' => [
+                'groupId' => [
+                    'type' => 'select',
+                    'options' => $this->client->getListAllGroups(),
+                    'placeholder' => [
+                        'pl' => 'Wybierz grupę',
+                        'en' => 'Select group'
+                    ],
+                ],
             ],
         ];
     }
