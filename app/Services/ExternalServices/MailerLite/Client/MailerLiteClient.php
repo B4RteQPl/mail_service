@@ -155,6 +155,27 @@ class MailerLiteClient extends BaseClient implements MailerLiteClientInterface
         }
     }
 
+    /**
+     * @url https://developers.mailerlite.com/docs/subscribers.html#delete-a-subscriber
+     * @throws \App\Exceptions\Services\ExternalServices\ExternalServiceClientException
+     */
+    public function deleteSubscriber(string $subscriberId): bool
+    {
+        try {
+            $url = $this->endpoint . '/subscribers/'. $subscriberId;
+
+            $response = $this->request()->delete($url);
+
+            if (!$response->successful()) {
+                throw new ExternalServiceClientException('MailerLite', $response->json()['message'], $response->status());
+            }
+
+            return $response->status() === 204;
+        } catch (\Exception $e) {
+            throw new ExternalServiceClientException('MailerLite', $e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
     private function request(): PendingRequest
     {
         return Http::withHeaders([

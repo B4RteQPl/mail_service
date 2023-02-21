@@ -2,13 +2,11 @@
 
 namespace Tests\Feature\Services\ExternalServices\CircleSo\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\CircleSo\CircleSoTestCase;
 
-class CircleSoIsConnectionOkTest extends TestCase
+class CircleSoIsConnectionOkTest extends CircleSoTestCase
 {
 
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

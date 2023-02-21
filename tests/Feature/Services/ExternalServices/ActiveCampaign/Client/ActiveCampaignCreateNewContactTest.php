@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\ActiveCampaign\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\ActiveCampaign\ActiveCampaignTestCase;
 
-class ActiveCampaignCreateNewContactTest extends TestCase
+class ActiveCampaignCreateNewContactTest extends ActiveCampaignTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
@@ -27,5 +24,7 @@ class ActiveCampaignCreateNewContactTest extends TestCase
         $this->assertArrayHasKey('email', $result);
         $this->assertArrayHasKey('firstName', $result);
         $this->assertArrayHasKey('lastName', $result);
+
+        $this->deleteContact($result['id']);
     }
 }

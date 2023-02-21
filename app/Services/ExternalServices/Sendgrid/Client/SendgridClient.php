@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Http;
 
 class SendgridClient extends BaseClient implements SendgridClientInterface
 {
-    protected string $apiUrl;
     protected string $endpoint = 'https://api.sendgrid.com';
     protected string $apiKey;
 
@@ -145,6 +144,23 @@ class SendgridClient extends BaseClient implements SendgridClientInterface
     {
         try {
             $url = $this->endpoint . '/v3/marketing/lists/' .$listId . '/contacts?contact_ids=' . $contactId;
+
+            $response = $this->request()->delete($url);
+
+            return $response->json();
+        } catch (\Exception $e) {
+            throw new ExternalServiceClientException('Sendgrid', $e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * @url https://docs.sendgrid.com/api-reference/contacts/delete-contacts
+     * @throws \App\Exceptions\Services\ExternalServices\ExternalServiceClientException
+     */
+    public function deleteContacts(string $contactId)
+    {
+        try {
+            $url = $this->endpoint . '/v3/marketing/contacts' . '?ids=' . $contactId;
 
             $response = $this->request()->delete($url);
 

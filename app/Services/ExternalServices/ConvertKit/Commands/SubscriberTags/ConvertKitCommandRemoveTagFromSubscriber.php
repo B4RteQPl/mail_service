@@ -12,17 +12,12 @@ class ConvertKitCommandRemoveTagFromSubscriber extends AbstractCommand
         $tagId = $params['tagId'];
         $email = new Email($params['email']);
 
-        try {
-            $subscriber = $this->client->listSubscribers($email);
-            if (!$subscriber) {
-                return null;
-            }
-
-            return $this->client->removeTagFromSubscriber($subscriber['id'], $tagId);
-        } catch (\Exception $e) {
-            $this->logException($e);
+        $subscriber = $this->client->listSubscribers($email);
+        if (!$subscriber) {
             return null;
         }
+
+        return $this->client->removeTagFromSubscriber($subscriber['id'], $tagId);
     }
 
     public function getConfig()

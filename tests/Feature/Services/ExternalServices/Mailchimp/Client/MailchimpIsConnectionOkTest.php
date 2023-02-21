@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\Mailchimp\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\Mailchimp\MailchimpTestCase;
 
-class MailchimpIsConnectionOkTest extends TestCase
+class MailchimpIsConnectionOkTest extends MailchimpTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

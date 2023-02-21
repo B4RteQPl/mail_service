@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\Sendgrid\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\Sendgrid\SendgridTestCase;
 
-class SendgridIsConnectionOkTest extends TestCase
+class SendgridIsConnectionOkTest extends SendgridTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

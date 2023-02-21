@@ -2,18 +2,15 @@
 
 namespace Tests\Feature\Services\ExternalServices\CircleSo\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\CircleSo\CircleSoTestCase;
 
-class CircleSoGetCommunityListsTest extends TestCase
+class CircleSoGetCommunityListsTest extends CircleSoTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
      */
-    public function when_get_community_lists_should_return_array_of_comminities()
+    public function when_get_community_lists_should_return_array_of_communities()
     {
         $result = $this->circleSo()->client->getCommunityList();
 

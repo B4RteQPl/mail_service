@@ -67,7 +67,6 @@ class GetResponseClient extends BaseClient implements GetResponseClientInterface
      */
     public function getContactsFromCampaign(Email $email, string $campaignId)
     {
-        dump('getContactsFromCampaign');
         try {
             $url = $this->endpoint . '/campaigns/'.$campaignId.'/contacts?query[email]=' . $email->get();
 
@@ -132,7 +131,6 @@ class GetResponseClient extends BaseClient implements GetResponseClientInterface
      */
     public function deleteContact(string $contactId): bool
     {
-        dump('deleteContact');
         try {
             $url = $this->endpoint . '/contacts/' . $contactId;
 

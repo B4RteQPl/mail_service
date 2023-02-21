@@ -12,4 +12,5 @@ interface MailerLiteClassicClientInterface
     public function fetchSubscriber(Email $email);
     public function assignSubscriberToGroup(string $subscriberId, string $groupId);
     public function unAssignSubscriberFromGroup(string $subscriberId, string $groupId);
+    public function deleteSubscriber(string $subscriberId);
 }

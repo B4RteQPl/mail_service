@@ -5,7 +5,7 @@ namespace App\Services\ExternalServices\Mailchimp\Client;
 use App\Exceptions\Services\ExternalServices\ExternalServiceClientException;
 use App\ValueObjects\Email;
 
-class MailchimpClient
+class MailchimpClient implements MailchimpClientInterface
 {
     protected string $apiKey;
 
@@ -54,8 +54,7 @@ class MailchimpClient
     public function getListMemberInfo(Email $email, string $listId)
     {
         try {
-            $subscriberHash = md5(strtolower($email->get()));
-            $response = $this->mailchimp->lists->getListMember($listId, $subscriberHash);
+            $response = $this->mailchimp->lists->getListMember($listId, $this->getSubscriberHash($email));
 
             return [
                 'id' => $response->id,
@@ -63,6 +62,7 @@ class MailchimpClient
                 'contact_id' => $response->contact_id,
                 'full_name' => $response->full_name,
                 'status' => $response->status,
+                'list_id' => $response->list_id,
             ];
         } catch (\Exception $e) {
             throw new ExternalServiceClientException('Mailchimp', $e->getMessage(), $e->getCode(), $e);
@@ -87,6 +87,7 @@ class MailchimpClient
                 'contact_id' => $response->contact_id,
                 'full_name' => $response->full_name,
                 'status' => $response->status,
+                'list_id' => $response->list_id,
             ];
         } catch (\Exception $e) {
             throw new ExternalServiceClientException('Mailchimp', $e->getMessage(), $e->getCode(), $e);
@@ -95,17 +96,34 @@ class MailchimpClient
 
     /**
      * @url https://mailchimp.com/developer/marketing/api/list-members/archive-list-member/
-     *
-     * could be replaced with https://mailchimp.com/developer/marketing/api/list-members/delete-list-member/
      * @throws \App\Exceptions\Services\ExternalServices\ExternalServiceClientException
      */
     public function deleteListMember(Email $email, string $listId)
     {
         try {
-            $subscriberHash = md5(strtolower($email->get()));
-            return $this->mailchimp->lists->deleteListMember($listId, $subscriberHash);
+            $this->mailchimp->lists->deleteListMember($listId, $this->getSubscriberHash($email));
+            return true;
         } catch (\Exception $e) {
             throw new ExternalServiceClientException('Mailchimp', $e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * could be replaced with https://mailchimp.com/developer/marketing/api/list-members/delete-list-member/
+     * @throws \App\Exceptions\Services\ExternalServices\ExternalServiceClientException
+     */
+    public function deleteListMemberPermanent(Email $email, string $listId)
+    {
+        try {
+            $this->mailchimp->lists->deleteListMemberPermanent($listId, $this->getSubscriberHash($email));
+            return true;
+        } catch (\Exception $e) {
+            throw new ExternalServiceClientException('Mailchimp', $e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+    private function getSubscriberHash(Email $email): string
+    {
+        return md5(strtolower($email->get()));
     }
 }

@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\CircleSo\Client\Spaces;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\CircleSo\CircleSoTestCase;
 
-class CircleSoGetSpacesTest extends TestCase
+class CircleSoGetSpacesTest extends CircleSoTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

@@ -3,13 +3,10 @@
 namespace Tests\Feature\Services\ExternalServices\GetResponse\Client;
 
 use App\ValueObjects\Email;
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\GetResponse\GetResponseTestCase;
 
-class GetResponseGetContactsFromCampaignTest extends TestCase
+class GetResponseGetContactsFromCampaignTest extends GetResponseTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

@@ -1,14 +1,11 @@
 <?php
 
-namespace Tests\Feature\Services\ExternalServices\CircleSo\Client;
+namespace Tests\Feature\Services\ExternalServices\CircleSo\Commands;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\CircleSo\CircleSoTestCase;
 
-class CircleSoGetCommunityListsTest extends TestCase
+class CircleSoCommandInviteMemberTest extends CircleSoTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\MailerLite\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\MailerLite\MailerLiteTestCase;
 
-class MailerLiteUnAssignSubscriberFromGroupTest extends TestCase
+class MailerLiteUnAssignSubscriberFromGroupTest extends MailerLiteTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
@@ -25,5 +22,8 @@ class MailerLiteUnAssignSubscriberFromGroupTest extends TestCase
         $isUnAssigned = $this->mailerLite()->client->unAssignSubscriberFromGroup($subscriberId, $groupId);
 
         $this->assertTrue($isUnAssigned);
+
+        // verify and clean after test
+        $this->deleteSubscriber($subscriberId);
     }
 }

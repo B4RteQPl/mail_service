@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\MailerLite\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\MailerLite\MailerLiteTestCase;
 
-class MailerLiteGetListAllGroupsTest extends TestCase
+class MailerLiteGetListAllGroupsTest extends MailerLiteTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

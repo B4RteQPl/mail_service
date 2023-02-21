@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\GetResponse\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\GetResponse\GetResponseTestCase;
 
-class GetResponseIsConnectionOkTest extends TestCase
+class GetResponseIsConnectionOkTest extends GetResponseTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

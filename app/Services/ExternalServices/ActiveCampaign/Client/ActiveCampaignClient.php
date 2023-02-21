@@ -167,6 +167,28 @@ class ActiveCampaignClient extends BaseClient implements ActiveCampaignClientInt
         }
     }
 
+    /**
+     * @url https://developers.activecampaign.com/reference/delete-contact
+     *
+     * @throws ExternalServiceClientException
+     */
+    public function deleteContact(string $contactId)
+    {
+        try {
+            $url = $this->endpoint . '/contacts/' . $contactId;
+
+            $response = $this->request()->delete($url);
+
+            if(!$response->successful()) {
+                throw new ExternalServiceClientException('ActiveCampaign', $response->json()['message'], $response->status());
+            }
+
+            return $response->status() === 200;
+        } catch (\Exception $e) {
+            throw new ExternalServiceClientException('ActiveCampaign', $e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
     private function request(): PendingRequest
     {
         return Http::withHeaders([

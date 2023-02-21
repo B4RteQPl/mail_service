@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\MailerLite\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\MailerLite\MailerLiteTestCase;
 
-class MailerLiteCreateSubscriberTest extends TestCase
+class MailerLiteCreateSubscriberTest extends MailerLiteTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
@@ -17,14 +14,16 @@ class MailerLiteCreateSubscriberTest extends TestCase
     {
         $contact = $this->getNewUser();
 
-        $result = $this->mailerLite()->client->createSubscriber($contact['email']);
+        $subscriber = $this->mailerLite()->client->createSubscriber($contact['email']);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
+        $this->assertIsArray($subscriber);
+        $this->assertNotEmpty($subscriber);
 
-        $this->assertArrayHasKey('id', $result);
-        $this->assertArrayHasKey('email', $result);
-        $this->assertArrayHasKey('status', $result);
-        $this->assertArrayHasKey('groups', $result);
+        $this->assertArrayHasKey('id', $subscriber);
+        $this->assertArrayHasKey('email', $subscriber);
+        $this->assertArrayHasKey('status', $subscriber);
+        $this->assertArrayHasKey('groups', $subscriber);
+
+        $this->deleteSubscriber($subscriber['id']);
     }
 }

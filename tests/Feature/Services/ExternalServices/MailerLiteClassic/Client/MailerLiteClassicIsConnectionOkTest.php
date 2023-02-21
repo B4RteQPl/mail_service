@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\MailerLiteClassic\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\MailerLiteClassic\MailerLiteClassicTestCase;
 
-class MailerLiteClassicIsConnectionOkTest extends TestCase
+class MailerLiteClassicIsConnectionOkTest extends MailerLiteClassicTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

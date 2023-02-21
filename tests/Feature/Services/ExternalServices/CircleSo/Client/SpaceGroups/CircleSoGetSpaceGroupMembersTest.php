@@ -3,13 +3,10 @@
 namespace Tests\Feature\Services\ExternalServices\CircleSo\Client\SpaceGroups;
 
 use App\ValueObjects\Email;
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\CircleSo\CircleSoTestCase;
 
-class CircleSoGetSpaceGroupMembersTest extends TestCase
+class CircleSoGetSpaceGroupMembersTest extends CircleSoTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

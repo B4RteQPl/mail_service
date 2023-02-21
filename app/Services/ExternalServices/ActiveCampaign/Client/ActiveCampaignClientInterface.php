@@ -18,4 +18,5 @@ interface ActiveCampaignClientInterface
     public function createNewContact(Email $email, FirstName $firstName, LastName $lastName);
     public function searchContactByEmail(Email $email);
     public function updateListStatusForContact(string $listId, string $contactId, string $status);
+    public function deleteContact(string $contactId);
 }

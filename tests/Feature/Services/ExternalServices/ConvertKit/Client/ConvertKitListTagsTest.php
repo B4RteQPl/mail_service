@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\ConvertKit\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\ConvertKit\ConvertKitTestCase;
 
-class ConvertKitListTagsTest extends TestCase
+class ConvertKitListTagsTest extends ConvertKitTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

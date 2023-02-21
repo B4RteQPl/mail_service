@@ -15,7 +15,6 @@ class Responder
 
     private function __construct($response)
     {
-        dump($response);
         $this->response = $response;
     }
 

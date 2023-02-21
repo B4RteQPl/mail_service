@@ -3,13 +3,10 @@
 namespace Tests\Feature\Services\ExternalServices\Sendgrid\Client;
 
 use App\ValueObjects\Email;
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\Sendgrid\SendgridTestCase;
 
-class SendgridGetContactsByEmailTest extends TestCase
+class SendgridGetContactsByEmailTest extends SendgridTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

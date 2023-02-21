@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\CircleSo\Client\SpaceGroups;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\CircleSo\CircleSoTestCase;
 
-class CircleSoAddMemberToSpaceGroupTest extends TestCase
+class CircleSoAddMemberToSpaceGroupTest extends CircleSoTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

@@ -3,13 +3,10 @@
 namespace Tests\Feature\Services\ExternalServices\ActiveCampaign\Client;
 
 use App\Services\ExternalServices\ActiveCampaign\Client\ActiveCampaignClient;
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\ActiveCampaign\ActiveCampaignTestCase;
 
-class ActiveCampaignUpdateListStatusForContactTest extends TestCase
+class ActiveCampaignUpdateListStatusForContactTest extends ActiveCampaignTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
@@ -22,7 +19,7 @@ class ActiveCampaignUpdateListStatusForContactTest extends TestCase
         $listId = $this->activeCampaign()->client->retrieveAllLists()[0]['id'];
 
         $result = $this->activeCampaign()->client->updateListStatusForContact($listId, $contactId, ActiveCampaignClient::LIST_STATUS_SUBSCRIBED);
-
+        dump($result);
         $this->assertArrayHasKey('contact', $result);
         $this->assertArrayHasKey('id', $result['contact']);
         $this->assertArrayHasKey('email', $result['contact']);
@@ -36,6 +33,8 @@ class ActiveCampaignUpdateListStatusForContactTest extends TestCase
         $this->assertArrayHasKey('contact', $result['contactList']);
 
         $this->assertEquals(ActiveCampaignClient::LIST_STATUS_SUBSCRIBED, $result['contactList']['status']);
+
+        $this->deleteContact($result['contact']['id']);
     }
 
     /**
@@ -63,5 +62,7 @@ class ActiveCampaignUpdateListStatusForContactTest extends TestCase
         $this->assertArrayHasKey('contact', $result['contactList']);
 
         $this->assertEquals(ActiveCampaignClient::LIST_STATUS_UNSUBSCRIBED, $result['contactList']['status']);
+
+        $this->deleteContact($result['contact']['id']);
     }
 }

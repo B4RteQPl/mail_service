@@ -2,18 +2,15 @@
 
 namespace Tests\Feature\Services\ExternalServices\MailerLite\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\MailerLite\MailerLiteTestCase;
 
-class MailerLiteAssignSubscriberToGroupTest extends TestCase
+class MailerLiteAssignSubscriberToGroupTest extends MailerLiteTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
      */
-    public function when_subscriber_is_created_then_can_be_assiged_to_group()
+    public function when_subscriber_is_created_then_can_be_assigned_to_group()
     {
         $contact = $this->getNewUser();
 
@@ -26,5 +23,9 @@ class MailerLiteAssignSubscriberToGroupTest extends TestCase
 
         $this->assertArrayHasKey('id', $result);
         $this->assertArrayHasKey('name', $result);
+
+        // verify and clean after test
+        $this->assertSubscriberHasGroup($contact['email'], $groupId);
+        $this->deleteSubscriber($subscriberId);
     }
 }

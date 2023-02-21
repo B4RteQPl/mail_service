@@ -107,7 +107,7 @@ class MailerLiteClassicClient extends BaseClient implements MailerLiteClassicCli
             if (!$response->successful()) {
                 throw new ExternalServiceClientException('MailerLiteClassic', $response->json()['message'], $response->status());
             }
-            dump($response->json());
+
             $subscriber = new MailerLiteClassicDataSubscriber($response->json());
             return $subscriber->toArray();
         } catch (\Exception $e) {
@@ -146,6 +146,26 @@ class MailerLiteClassicClient extends BaseClient implements MailerLiteClassicCli
     {
         try {
             $url = $this->endpoint . '/groups/'. $groupId . '/subscribers/'. $subscriberId;
+
+            $response = $this->request()->delete($url);
+
+            if (!$response->successful()) {
+                throw new ExternalServiceClientException('MailerLiteClassic', $response->json()['message'], $response->status());
+            }
+
+            return $response->status() === 204;
+        } catch (\Exception $e) {
+            throw new ExternalServiceClientException('MailerLiteClassic', $e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * @throws \App\Exceptions\Services\ExternalServices\ExternalServiceClientException
+     */
+    public function deleteSubscriber(string $subscriberId)
+    {
+        try {
+            $url = $this->endpoint . '/subscribers/'. $subscriberId;
 
             $response = $this->request()->delete($url);
 

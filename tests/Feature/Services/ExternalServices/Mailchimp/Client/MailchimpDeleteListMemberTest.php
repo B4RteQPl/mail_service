@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\Mailchimp\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\Mailchimp\MailchimpTestCase;
 
-class MailchimpDeleteListMemberTest extends TestCase
+class MailchimpDeleteListMemberTest extends MailchimpTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
@@ -19,8 +16,10 @@ class MailchimpDeleteListMemberTest extends TestCase
         $listId = $this->mailchimp()->client->getAllLists()[0]['id'];
         $this->mailchimp()->client->addListMember($contact['email'], $listId);
 
-        $result = $this->mailchimp()->client->deleteListMember($contact['email'], $listId);
+        $isDeleted = $this->mailchimp()->client->deleteListMember($contact['email'], $listId);
 
-        $this->assertEmpty($result);
+        $this->assertTrue($isDeleted);
+
+        $this->deleteListMemberPermanent($contact['email'], $listId);
     }
 }

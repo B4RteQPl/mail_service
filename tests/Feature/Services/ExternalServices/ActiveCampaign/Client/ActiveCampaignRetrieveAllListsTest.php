@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\ActiveCampaign\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\ActiveCampaign\ActiveCampaignTestCase;
 
-class ActiveCampaignRetrieveAllListsTest extends TestCase
+class ActiveCampaignRetrieveAllListsTest extends ActiveCampaignTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test

@@ -25,17 +25,47 @@ class ActiveCampaign extends AbstractCommandLoader
         parent::__construct();
     }
 
+    static public function configureIntegration()
+    {
+        return [
+            'fields' => [
+                'integrationName' => [
+                    'type' => 'string',
+                    'placeholder' => [
+                        'pl' => 'Nazwij konfiguracje',
+                        'en' => 'Name your configuration'
+                    ],
+                ],
+                'apiUrl' => [
+                    'type' => 'string',
+                    'placeholder' => [
+                        'pl' => 'Podaj nazwę użytkownika',
+                        'en' => 'Enter username'
+                    ],
+                    'hint' => [
+                        'pl' => 'Znajdziesz go w <a href="https://developers.activecampaign.com/reference/url" target="_blank">Ustawieniach API</a>',
+                        'en' => 'You can find it in <a href="https://developers.activecampaign.com/reference/url" target="_blank">API Settings</a>'
+                    ],
+                ],
+                'apiKey' => [
+                    'type' => 'string',
+                    'placeholder' => [
+                        'pl' => 'Podaj klucz API',
+                        'en' => 'Enter API key'
+                    ],
+                    'hint' => [
+                        'pl' => 'Znajdziesz go w <a href="https://developers.activecampaign.com/reference/authentication" target="_blank">Ustawieniach API</a>',
+                        'en' => 'You can find it in <a href="https://developers.activecampaign.com/reference/authentication" target="_blank">API Settings</a>'
+                    ],
+                ],
+            ],
+        ];
+    }
+
     static public function setClient(string $apiKey, string $apiUrl): ActiveCampaign
     {
         $client = new ActiveCampaignClient($apiKey, $apiUrl);
 
         return new ActiveCampaign($client);
-    }
-
-    public function setup()
-    {
-        return [
-            'title' => 'test'
-        ];
     }
 }

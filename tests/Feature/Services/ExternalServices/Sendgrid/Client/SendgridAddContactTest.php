@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\Sendgrid\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\Sendgrid\SendgridTestCase;
 
-class SendgridAddContactTest extends TestCase
+class SendgridAddContactTest extends SendgridTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
@@ -23,5 +20,6 @@ class SendgridAddContactTest extends TestCase
         $this->assertNotEmpty($result);
 
         $this->assertArrayHasKey('job_id', $result);
+
     }
 }

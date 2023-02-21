@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\Mailchimp\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\Mailchimp\MailchimpTestCase;
 
-class MailchimpAddListMemberTest extends TestCase
+class MailchimpAddListMemberTest extends MailchimpTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
@@ -25,5 +22,9 @@ class MailchimpAddListMemberTest extends TestCase
         $this->assertArrayHasKey('contact_id', $result);
         $this->assertArrayHasKey('full_name', $result);
         $this->assertArrayHasKey('status', $result);
+        $this->assertArrayHasKey('list_id', $result);
+
+        $this->assertMemberHasList($contact['email'], $listId);
+        $this->deleteListMemberPermanent($contact['email'], $listId);
     }
 }

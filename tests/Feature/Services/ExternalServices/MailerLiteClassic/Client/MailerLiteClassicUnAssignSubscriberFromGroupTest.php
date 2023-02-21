@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Services\ExternalServices\MailerLiteClassic\Client;
 
-use Tests\Feature\Services\ExternalServices\Traits\ExternalServicesProviderTrait;
-use Tests\TestCase;
+use Tests\Feature\Services\ExternalServices\MailerLiteClassic\MailerLiteClassicTestCase;
 
-class MailerLiteClassicUnAssignSubscriberFromGroupTest extends TestCase
+class MailerLiteClassicUnAssignSubscriberFromGroupTest extends MailerLiteClassicTestCase
 {
-
-    use ExternalServicesProviderTrait;
 
     /**
      * @test
@@ -17,13 +14,16 @@ class MailerLiteClassicUnAssignSubscriberFromGroupTest extends TestCase
     {
         $contact = $this->getNewUser();
 
-        $groupId = $this->mailerLiteClassic()->client->getListAllGroups()[0]['id'];
+        $group = $this->mailerLiteClassic()->client->getListAllGroups()[0];
         $subscriberId = $this->mailerLiteClassic()->client->createSubscriber($contact['email'])['id'];
 
-        $this->mailerLiteClassic()->client->assignSubscriberToGroup($subscriberId, $groupId);
+        $this->mailerLiteClassic()->client->assignSubscriberToGroup($subscriberId, $group['name']);
 
-        $isUnAssigned = $this->mailerLiteClassic()->client->unAssignSubscriberFromGroup($subscriberId, $groupId);
+        $isUnAssigned = $this->mailerLiteClassic()->client->unAssignSubscriberFromGroup($subscriberId, $group['id']);
 
         $this->assertTrue($isUnAssigned);
+
+        // verify and clean after test
+        $this->deleteSubscriber($subscriberId);
     }
 }
