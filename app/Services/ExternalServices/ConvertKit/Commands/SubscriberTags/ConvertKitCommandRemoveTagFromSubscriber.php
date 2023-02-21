@@ -5,9 +5,6 @@ namespace App\Services\ExternalServices\ConvertKit\Commands\SubscriberTags;
 use App\Services\ExternalServices\ConvertKit\Commands\AbstractCommand;
 use App\ValueObjects\Email;
 
-/**
- * @url https://developers.activecampaign.com/reference/create-a-new-contact
- */
 class ConvertKitCommandRemoveTagFromSubscriber extends AbstractCommand
 {
     public function execute(array $params)

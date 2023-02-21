@@ -10,9 +10,6 @@ use App\ValueObjects\Email;
 use App\ValueObjects\FirstName;
 use App\ValueObjects\LastName;
 
-/**
- * @url https://developers.activecampaign.com/reference/create-a-new-contact
- */
 class ActiveCampaignCommandAddContactToList extends AbstractCommand
 {
     public function execute(array $params)

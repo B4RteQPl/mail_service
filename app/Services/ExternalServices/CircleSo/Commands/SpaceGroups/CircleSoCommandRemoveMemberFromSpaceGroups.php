@@ -22,37 +22,17 @@ class CircleSoCommandRemoveMemberFromSpaceGroups extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => 'Utwórz nowego użytkownika',
-                'en' => 'Create a new user',
+            'actionName' => [
+                'pl' => 'Usuń kontakt z grupy przestrzeni',
+                'en' => 'Remove contact from space group',
             ],
-            'description' => [
-                'pl' => 'Tworzy nowego użytkownika w ActiveCampaign',
-                'en' => 'Creates a new user in ActiveCampaign',
-            ],
-            'parameters' => [
-                'email' => [
-                    'type' => 'string',
-                    'required' => true,
+            'fields' => [
+                'spaceGroupIds' => [
+                    'type' => 'select',
+                    'options' => $this->client->getSpaceGroups(),
                     'placeholder' => [
-                        'pl' => 'Adres email',
-                        'en' => 'Email address',
-                    ],
-                ],
-                'firstName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Imię',
-                        'en' => 'First name',
-                    ],
-                ],
-                'lastName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Nazwisko',
-                        'en' => 'Last name',
+                        'pl' => 'Wybierz przestrzeń',
+                        'en' => 'Select space group'
                     ],
                 ],
             ],

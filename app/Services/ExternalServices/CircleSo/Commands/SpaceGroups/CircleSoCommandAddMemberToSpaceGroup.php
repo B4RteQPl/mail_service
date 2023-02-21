@@ -23,8 +23,8 @@ class CircleSoCommandAddMemberToSpaceGroup extends AbstractCommand
     {
         return [
             'actionName' => [
-                'pl' => 'Dodaj kontakt do grupy',
-                'en' => 'Add contact to group',
+                'pl' => 'Dodaj kontakt do grupy przestrzeni',
+                'en' => 'Add contact to space group',
             ],
             'fields' => [
                 'communityId' => [
@@ -39,8 +39,8 @@ class CircleSoCommandAddMemberToSpaceGroup extends AbstractCommand
                     'type' => 'select',
                     'options' => $this->client->getSpaceGroups(),
                     'placeholder' => [
-                        'pl' => 'Do jakiej grupy dodać?',
-                        'en' => 'To which space group add?'
+                        'pl' => 'Wybierz grupę przestrzeni',
+                        'en' => 'Select space group'
                     ],
                 ],
             ],

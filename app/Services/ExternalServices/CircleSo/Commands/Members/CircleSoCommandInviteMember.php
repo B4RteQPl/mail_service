@@ -25,37 +25,25 @@ class CircleSoCommandInviteMember extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => 'Utwórz nowego użytkownika',
-                'en' => 'Create a new user',
+            'actionName' => [
+                'pl' => 'Zaproś do społeczności',
+                'en' => 'Invite to community',
             ],
-            'description' => [
-                'pl' => 'Tworzy nowego użytkownika w ActiveCampaign',
-                'en' => 'Creates a new user in ActiveCampaign',
-            ],
-            'parameters' => [
-                'email' => [
-                    'type' => 'string',
-                    'required' => true,
+            'fields' => [
+                'spaceIds' => [
+                    'type' => 'select',
+                    'options' => $this->client->getSpaces(),
                     'placeholder' => [
-                        'pl' => 'Adres email',
-                        'en' => 'Email address',
+                        'pl' => 'Wybierz przestrzeń',
+                        'en' => 'Select space'
                     ],
                 ],
-                'firstName' => [
-                    'type' => 'string',
-                    'required' => true,
+                'spaceGroupIds' => [
+                    'type' => 'select',
+                    'options' => $this->client->getSpaceGroups(),
                     'placeholder' => [
-                        'pl' => 'Imię',
-                        'en' => 'First name',
-                    ],
-                ],
-                'lastName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Nazwisko',
-                        'en' => 'Last name',
+                        'pl' => 'Wybierz grupę przestrzeni',
+                        'en' => 'Select space group'
                     ],
                 ],
             ],

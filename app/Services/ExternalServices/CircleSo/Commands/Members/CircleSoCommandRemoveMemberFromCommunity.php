@@ -21,39 +21,9 @@ class CircleSoCommandRemoveMemberFromCommunity extends AbstractCommand
     public function getConfig()
     {
         return [
-            'title' => [
-                'pl' => 'Utwórz nowego użytkownika',
-                'en' => 'Create a new user',
-            ],
-            'description' => [
-                'pl' => 'Tworzy nowego użytkownika w ActiveCampaign',
-                'en' => 'Creates a new user in ActiveCampaign',
-            ],
-            'parameters' => [
-                'email' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Adres email',
-                        'en' => 'Email address',
-                    ],
-                ],
-                'firstName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Imię',
-                        'en' => 'First name',
-                    ],
-                ],
-                'lastName' => [
-                    'type' => 'string',
-                    'required' => true,
-                    'placeholder' => [
-                        'pl' => 'Nazwisko',
-                        'en' => 'Last name',
-                    ],
-                ],
+            'actionName' => [
+                'pl' => 'Usuń kontakt z społeczności',
+                'en' => 'Remove contact from community',
             ],
         ];
     }

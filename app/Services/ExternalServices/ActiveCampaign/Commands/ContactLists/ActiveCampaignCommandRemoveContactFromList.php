@@ -7,9 +7,6 @@ use App\Services\ExternalServices\ActiveCampaign\Client\ActiveCampaignClient;
 use App\Services\ExternalServices\ActiveCampaign\Commands\AbstractCommand;
 use App\ValueObjects\Email;
 
-/**
- * @url https://developers.activecampaign.com/reference/create-a-new-contact
- */
 class ActiveCampaignCommandRemoveContactFromList extends AbstractCommand
 {
     public function execute(array $params)
