@@ -2,7 +2,7 @@
 
 namespace App\Services\ExternalServices\MailerLite\Data;
 
-use App\Clients\BaseEntity;
+use App\Services\ExternalServices\BaseEntity;
 
 class MailerLiteDataSubscriber extends BaseEntity
 {

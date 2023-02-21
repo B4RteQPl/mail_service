@@ -2,16 +2,15 @@
 
 namespace App\Services\ExternalServices\ActiveCampaign\Client;
 
-use App\Clients\BaseClient;
 use App\Exceptions\Services\ExternalServices\ExternalServiceClientException;
 use App\Services\ExternalServices\ActiveCampaign\Data\ActiveCampaignDataContact;
 use App\Services\ExternalServices\ActiveCampaign\Data\ActiveCampaignDataContactList;
 use App\Services\ExternalServices\ActiveCampaign\Data\ActiveCampaignDataList;
+use App\Services\ExternalServices\BaseClient;
 use App\ValueObjects\Email;
 use App\ValueObjects\FirstName;
 use App\ValueObjects\LastName;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 
 class ActiveCampaignClient extends BaseClient implements ActiveCampaignClientInterface

@@ -2,7 +2,7 @@
 
 namespace App\Services\ExternalServices\ConvertKit\Data;
 
-use App\Clients\BaseEntity;
+use App\Services\ExternalServices\BaseEntity;
 
 class ConvertKitDataTag extends BaseEntity
 {

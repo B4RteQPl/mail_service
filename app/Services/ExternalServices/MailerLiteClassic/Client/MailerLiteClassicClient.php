@@ -2,13 +2,13 @@
 
 namespace App\Services\ExternalServices\MailerLiteClassic\Client;
 
-use App\Clients\BaseClient;
 use App\Exceptions\Services\ExternalServices\ExternalServiceClientException;
+use App\Services\ExternalServices\BaseClient;
 use App\Services\ExternalServices\MailerLiteClassic\Data\MailerLiteClassicDataGroup;
 use App\Services\ExternalServices\MailerLiteClassic\Data\MailerLiteClassicDataSubscriber;
+use App\ValueObjects\Email;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
-use App\ValueObjects\Email;
 
 class MailerLiteClassicClient extends BaseClient implements MailerLiteClassicClientInterface
 {

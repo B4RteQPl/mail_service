@@ -2,7 +2,7 @@
 
 namespace App\Services\ExternalServices\ActiveCampaign\Data;
 
-use App\Clients\BaseEntity;
+use App\Services\ExternalServices\BaseEntity;
 
 class ActiveCampaignDataList extends BaseEntity
 {

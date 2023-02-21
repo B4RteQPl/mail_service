@@ -2,13 +2,13 @@
 
 namespace App\Services\ExternalServices\Sendgrid\Client;
 
-use App\Clients\BaseClient;
 use App\Exceptions\Services\ExternalServices\ExternalServiceClientException;
+use App\Services\ExternalServices\BaseClient;
 use App\Services\ExternalServices\Sendgrid\Data\SendgridDataContact;
 use App\Services\ExternalServices\Sendgrid\Data\SendgridDataList;
+use App\ValueObjects\Email;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
-use App\ValueObjects\Email;
 
 class SendgridClient extends BaseClient implements SendgridClientInterface
 {

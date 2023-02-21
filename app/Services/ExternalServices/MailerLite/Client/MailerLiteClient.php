@@ -2,8 +2,8 @@
 
 namespace App\Services\ExternalServices\MailerLite\Client;
 
-use App\Clients\BaseClient;
 use App\Exceptions\Services\ExternalServices\ExternalServiceClientException;
+use App\Services\ExternalServices\BaseClient;
 use App\Services\ExternalServices\MailerLite\Data\MailerLiteDataGroup;
 use App\Services\ExternalServices\MailerLite\Data\MailerLiteDataSubscriber;
 use App\ValueObjects\Email;

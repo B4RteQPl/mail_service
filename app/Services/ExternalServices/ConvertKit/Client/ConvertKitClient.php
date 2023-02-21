@@ -2,8 +2,8 @@
 
 namespace App\Services\ExternalServices\ConvertKit\Client;
 
-use App\Clients\BaseClient;
 use App\Exceptions\Services\ExternalServices\ExternalServiceClientException;
+use App\Services\ExternalServices\BaseClient;
 use App\Services\ExternalServices\ConvertKit\Data\ConvertKitDataSubscriber;
 use App\Services\ExternalServices\ConvertKit\Data\ConvertKitDataTag;
 use App\ValueObjects\Email;

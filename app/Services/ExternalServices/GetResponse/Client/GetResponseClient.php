@@ -2,13 +2,12 @@
 
 namespace App\Services\ExternalServices\GetResponse\Client;
 
-use App\Clients\BaseClient;
 use App\Exceptions\Services\ExternalServices\ExternalServiceClientException;
+use App\Services\ExternalServices\BaseClient;
 use App\Services\ExternalServices\GetResponse\Data\GetResponseDataCampaign;
 use App\Services\ExternalServices\GetResponse\Data\GetResponseDataCampaignContact;
 use App\ValueObjects\Email;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 
 class GetResponseClient extends BaseClient implements GetResponseClientInterface

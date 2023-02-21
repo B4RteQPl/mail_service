@@ -2,8 +2,8 @@
 
 namespace App\Services\ExternalServices\CircleSo\Client;
 
-use App\Clients\BaseClient;
 use App\Exceptions\Services\ExternalServices\ExternalServiceClientException;
+use App\Services\ExternalServices\BaseClient;
 use App\Services\ExternalServices\CircleSo\Data\CircleSoDataCommunity;
 use App\Services\ExternalServices\CircleSo\Data\CircleSoDataInviteMember;
 use App\Services\ExternalServices\CircleSo\Data\CircleSoDataSearchMember;

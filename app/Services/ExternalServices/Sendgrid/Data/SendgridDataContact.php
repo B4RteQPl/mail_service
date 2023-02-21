@@ -2,7 +2,7 @@
 
 namespace App\Services\ExternalServices\Sendgrid\Data;
 
-use App\Clients\BaseEntity;
+use App\Services\ExternalServices\BaseEntity;
 
 class SendgridDataContact extends BaseEntity
 {

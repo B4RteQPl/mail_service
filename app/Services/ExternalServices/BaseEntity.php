@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Clients;
+namespace App\Services\ExternalServices;
 
 class BaseEntity
 {

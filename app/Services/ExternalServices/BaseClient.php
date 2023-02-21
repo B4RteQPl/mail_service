@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Clients;
+namespace App\Services\ExternalServices;
 
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Log as Log;

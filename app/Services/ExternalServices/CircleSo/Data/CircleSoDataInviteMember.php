@@ -2,7 +2,7 @@
 
 namespace App\Services\ExternalServices\CircleSo\Data;
 
-use App\Clients\BaseEntity;
+use App\Services\ExternalServices\BaseEntity;
 
 class CircleSoDataInviteMember extends BaseEntity
 {
